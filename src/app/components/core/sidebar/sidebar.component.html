@@ -1,0 +1,117 @@
+<aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0" *ngIf="nav.isVisible">
+  <div class="main-navbar">
+    <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
+      <a class="navbar-brand w-100 mr-0" routerLink="" style="line-height: 25px;">
+        <div class="d-table m-auto">
+          <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="assets/images/logo.svg"
+            alt="Shards Dashboard">
+          <span class="d-none d-md-inline ml-1">{{app.company}}</span>
+        </div>
+      </a>
+      <a class="toggle-sidebar d-sm-inline d-md-none d-lg-none">
+        <i class="material-icons"></i>
+      </a>
+    </nav>
+  </div>
+  <form action="#" class="main-sidebar__search w-100 border-right d-sm-flex d-md-none d-lg-none">
+    <div class="input-group input-group-seamless ml-3">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <i class="fas fa-search"></i>
+        </div>
+      </div>
+      <input class="navbar-search form-control" type="text" placeholder="Search for something..." aria-label="Search">
+    </div>
+  </form>
+  <div class="nav-wrapper">
+    <h6 class="main-sidebar__nav-title">Dashboards</h6>
+    <ul class="nav nav--no-borders flex-column">
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'active': currentUrl == '' }" (click)="navigate('')" routerLink="">
+
+          <i class="material-icons"></i>
+          <span>Analytics <span class="pull-right badge badge-warning">working</span></span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'active': currentUrl == 'messages' }" (click)="navigate('messages')" routerLink="messages">
+          <i class="material-icons">message</i>
+          <span>Messages <span class="pull-right badge badge-warning">working</span></span>
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link " href="#" role="button">
+          <i class="material-icons"></i>
+          <span>Profiles <span class="pull-right badge badge-warning">working</span></span>
+        </a>
+      </li>
+    </ul>
+    <h6 class="main-sidebar__nav-title">Management</h6>
+    <ul class="nav nav--no-borders flex-column">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" [ngClass]="{'active': currentUrl == 'proj' }" data-toggle="dropdown" href="#"
+          role="button" aria-haspopup="true" aria-expanded="true">
+          <i class="material-icons">clear_all</i>
+          <span>Project</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-small">
+          <a class="dropdown-item " routerLink="management/new-project" (click)="navigate('proj')">New Project</a>
+          <a class="dropdown-item " routerLink="project/view-projects" (click)="navigate('proj')">View Projects</a>
+          <a class="dropdown-item " routerLink="management/assign-employee" (click)="navigate('proj')">Assign Employee</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle " data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+          aria-expanded="true">
+          <i class="material-icons">toc</i>
+          <span>Task</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-small">
+            <a class="dropdown-item " routerLink="/management/task/task">Task</a>
+            <a class="dropdown-item " routerLink="/task/my-tasks">My Tasks</a>
+            <a class="dropdown-item " routerLink="/management/task/task-overview">Overview</a>
+          <a class="dropdown-item " routerLink="/management/task/new-task">New Task</a>
+          <a class="dropdown-item " routerLink="management/assign-task" (click)="navigate('proj')">Assign Task</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" [ngClass]="{'active': currentUrl == 'emp' }" data-toggle="dropdown" href="#"
+          role="button" aria-haspopup="false" aria-expanded="false">
+          <i class="material-icons">group</i>
+          <span>Employees</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-small">
+          <a class="dropdown-item " routerLink="management/new-employee" (click)="navigate('emp')">New Employee</a>
+          <a class="dropdown-item " routerLink="management/view-employees" (click)="navigate('emp')">View Employees</a>
+        </div>
+      </li>
+    </ul>
+    <h6 class="main-sidebar__nav-title">Structure</h6>
+    <ul class="nav nav--no-borders flex-column">
+      <li class="nav-item">
+        <a class="nav-link " [ngClass]="{'active': currentUrl == 'dept' }" (click)="navigate('dept')" routerLink="structure/department">
+          <i class="material-icons">view_module</i>
+          <span>Department</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " [ngClass]="{'active': currentUrl == 'desig' }" (click)="navigate('desig')" routerLink="structure/designation">
+          <i class="material-icons">table_chart</i>
+          <span>Designation</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " [ngClass]="{'active': currentUrl == 'cat' }" (click)="navigate('cat')" routerLink="structure/category">
+          <i class="material-icons">vertical_split</i>
+          <span>Category</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'active': currentUrl == 'skills' }" (click)="navigate('skills')" routerLink="structure/skills">
+          <i class="material-icons">reorder</i>
+          <span>Skills</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>

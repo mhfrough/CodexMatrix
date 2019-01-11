@@ -1,0 +1,101 @@
+<div class="main-content-container container-fluid px-4">
+  <br />
+  <div class="row">
+    <div class="col-lg-5 offset-lg-2">
+
+
+      <div class="auth-form mx-auto">
+        <div class="card card-small">
+          <div class="card-body">
+            <img class="auth-form__logo d-table mx-auto mb-6" src="assets/images/logo.svg" alt="Shards Dashboards - Register Template">
+            <br />
+            <h5 class="auth-form__title text-center mb-4">Create Your Account</h5>
+            <hr />
+
+            <div class="text-center">
+              <h6 class="text-uppercase page-subtitle mb-4">{{authMsg}}</h6>
+              <br />
+              <app-loading *ngIf="isLoading"></app-loading>
+            </div>
+
+            <form role="form" *ngIf="isForm" [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)">
+              <fieldset>
+                <div class="form-group">
+                  <input class="form-control" placeholder="Company Name" type="text" formControlName="name">
+                  <small class="alertMessage" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
+                    Company name is required
+                  </small>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" placeholder="E-mail" type="email" formControlName="email">
+                  <small class="alertMessage" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">
+                    Valid email is required
+                  </small>
+                </div>
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="customSelect01">Domain</label>
+                    </div>
+                    <select class="custom-select" formControlName="domain">
+                      <option>Software House</option>
+                      <option>University/ Institude</option>
+                    </select>
+                  </div>
+                  <small class="alertMessage" *ngIf="!rForm.controls['domain'].valid && rForm.controls['domain'].touched">
+                    Select option
+                  </small>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" placeholder="Password" type="password" formControlName="password">
+                  <small class="alertMessage" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">
+                    Valid password is required
+                  </small>
+                </div>
+
+                <div class="form-group">
+                  <input class="form-control" placeholder="Confirm Password" type="password" formControlName="confirmPassword">
+                  <small class="alertMessage" *ngIf="!rForm.controls['confirmPassword'].valid && rForm.controls['confirmPassword'].touched; else filled">
+                    Confirm Password
+                  </small>
+                  <small class="alertMessage" #filled *ngIf="cpwd.hasError('invalid')">
+                    Password does not match
+                  </small>
+
+                </div>
+
+                <div class="form-group clearfix">
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
+                    <label class="custom-control-label" for="formsCheckboxDefault">Agree to <a href="#">Data Policy</a></label>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-pill btn-accent d-table mx-auto" [disabled]="!rForm.valid">Create
+                  Account</button>
+                <br />
+              </fieldset>
+            </form>
+
+
+          </div>
+          <div class="card-footer border-top">
+            <ul class="auth-form__social-icons d-table mx-auto">
+              <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+              <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fab fa-github"></i></a></li>
+              <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="auth-form__meta d-flex mt-4">
+          <a href="forgot-password.html">Forgot your password?</a>
+          <a class="ml-auto" routerLink="/authentication/login">Sign In</a>
+        </div>
+      </div>
+
+      <br />
+
+    </div>
+  </div>
+</div>

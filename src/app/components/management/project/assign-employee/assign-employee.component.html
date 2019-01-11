@@ -1,0 +1,101 @@
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-lg-8 offset-lg-2 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">Assign Employee</span>
+      <h3 class="page-title">Assign a new employee</h3>
+      <hr />
+    </div>
+  </div>
+  <!-- End Page Header -->
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+
+      <form role="form" [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)">
+        <fieldset>
+
+          <div class="row">
+            <div class="col-lg-12">
+
+
+              <label class="formLabel">Employee assignment</label>
+              <strong class="text-muted d-block mb-2"><small>This is where employee is being assign to project. </small> </strong>
+              <br />
+
+
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Department</label>
+                  </div>
+                  <select class="form-control" formControlName="deptId" (change)="onChange($event.target.value)">
+                    <option></option>
+                    <option *ngFor="let item of dept.deptList" value="{{item.id}}">
+                      {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Project</label>
+                  </div>
+                  <select class="form-control" formControlName="projId">
+                    <option></option>
+                    <option *ngFor="let item of proj.projList" value="{{item.id}}">
+                      {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Employee</label>
+                  </div>
+                  <select class="form-control" formControlName="empId">
+                    <option></option>
+                    <option *ngFor="let item of emp.empList" value="{{item.id}}">
+                      {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Designation</label>
+                  </div>
+                  <select class="form-control" formControlName="desigId">
+                    <option></option>
+                    <option *ngFor="let item of desig.desigList" value="{{item.id}}">
+                      {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <hr /><br />
+            <button type="submit" id="submit" class="mb-2 btn btn-primary mr-1  btn-block" [disabled]="!rForm.valid">Assign
+              Employee</button>
+            <button type="reset" class="mb-2 btn btn-link mr-1 srh-btn btn-block" (click)="app.reset()">Cancel
+              This Assignment</button>
+          </div>
+
+        </fieldset>
+      </form>
+
+
+    </div>
+  </div>
+
+</div>

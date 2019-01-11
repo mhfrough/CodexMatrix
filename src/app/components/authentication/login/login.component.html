@@ -1,0 +1,63 @@
+<div class="main-content-container container-fluid px-4">
+  <br />
+  <div class="row">
+    <div class="col-lg-5 offset-lg-2">
+
+
+      <div class="auth-form mx-auto">
+        <div class="card card-small">
+          <div class="card-body">
+            <img class="auth-form__logo d-table mx-auto mb-6" src="assets/images/logo.svg" alt="Shards Dashboards - Register Template">
+            <br />
+            <h5 class="auth-form__title text-center mb-4">Access Your Account</h5>
+            <hr />
+
+            <div class="text-center">
+              <h6 class="text-uppercase page-subtitle mb-4">{{authMsg}}</h6>
+              <br />
+              <app-loading *ngIf="isLoading"></app-loading>
+            </div>
+
+            <form role="form" *ngIf="isForm" [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)">
+              <fieldset>
+                <div class="form-group">
+                  <input class="form-control" placeholder="E-mail" type="email" formControlName="email">
+                  <small class="alertMessage" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">
+                    Required a valid email address!
+                  </small>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" placeholder="Password" type="password" formControlName="password">
+                  <small class="alertMessage" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">
+                    Required 6 character of password field!
+                  </small>
+                </div>
+
+                <button type="submit" class="btn btn-pill btn-accent d-table mx-auto" [disabled]="!rForm.valid">Access
+                  Account</button>
+                <br />
+              </fieldset>
+            </form>
+
+
+          </div>
+          <div class="card-footer border-top">
+            <ul class="auth-form__social-icons d-table mx-auto">
+              <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+              <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fab fa-github"></i></a></li>
+              <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="auth-form__meta d-flex mt-4">
+          <a href="forgot-password.html">Forgot your password?</a>
+          <a class="ml-auto" routerLink="/authentication/register">Create new account ?</a>
+        </div>
+      </div>
+
+      <br />
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">View Employee</span>
+      <h3 class="page-title">List of all employees</h3>
+    </div>
+  </div>
+  <!-- End Page Header -->
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card card-small mb-4">
+
+        <div class="card-header border-bottom">
+          <small>
+            <label class="sh-ent-lbl"><span>Show</span>
+              <select class="custom-select form-control-sm sh-ent" (change)="app.filterRange($event.target.value)">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              entries</label>
+          </small>
+        </div>
+
+        <div class="col-lg-12 offset-lg-0">
+          <div class="input-group input-group-seamless">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="material-icons">search</i>
+              </div>
+            </div>
+            <input type="text" class="form-control form-control-lg srh-bx" name="searchString" placeholder="Search"
+              [(ngModel)]="searchString">
+            <div class="btn-group">
+              <button class="btn btn-link dropdown-toggle srh-btn" type="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                Sort order
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" (click)="sortAsc()">Asc</a>
+                <a class="dropdown-item" (click)="sortDesc()">Desc</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body p-0">
+
+          <div class="table-responsive">
+
+
+            <table class="table mb-0">
+              <thead class="py-2 bg-light text-semibold border-bottom">
+                <tr>
+                  <th></th>
+                  <th (click)="sortByName()">Employee <i class="material-icons">import_export</i></th>
+                  <th (click)="sortByDepartment()">Department <i class="material-icons">import_export</i></th>
+                  <th (click)="sortByDepartment()">Designation <i class="material-icons">import_export</i></th>
+                  <th (click)="sortByRole()">Role <i class="material-icons">import_export</i></th>
+                  <th>Manager</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of emp.empList | filter : 'name' : searchString | slice: 0: app.end; index as i">
+                  <td class="lo-stats__image">
+                    <img class="border rounded" src="/src/images/avatars/2.jpg">
+                  </td>
+                  <td class="lo-stats__order-details">
+                    <span>{{item.name}}</span>
+                    <span>{{item.email}}</span>
+                  </td>
+                  <td class="lo-stats__status">
+                    {{item.departmentName}}
+                  </td>
+                  <td class="lo-stats__status">
+                    {{item.designationName}}
+                  </td>
+                  <td class="lo-stats__items">{{item.roleName}}</td>
+                  <td class="lo-stats__items">{{item.mgrName}}</td>
+                  <td class="lo-stats__actions">
+                    <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-sm btn-white" (click)="viewProfile(item.id)">Details</button>
+                      <button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        More
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" (click)="onUpdate(item.id)">Update</a>
+                        <a class="dropdown-item" (click)="onDelete(item.id)">Delete</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" (click)="sortDesc()">Assign to project</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+          </div>
+
+          <div class="text-center">
+            <p class="text-uppercase page-subtitle mb-4" *ngIf="emp.empList.length == 0">
+              List is empty!
+            </p>
+          </div>
+
+        </div>
+
+        <div class="card-footer text-muted">
+          <small>{{app.end}} out of {{emp.empList.length}}</small>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,143 @@
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">Management</span>
+      <h3 class="page-title">Task</h3>
+    </div>
+  </div>
+  <!-- End Page Header -->
+
+  <div class="row">
+    <div class="col-lg-12">
+
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" href="#profile" role="tab" data-toggle="tab">All <span class="badge badge-pill badge-soft-secondary">823</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#buzz" role="tab" data-toggle="tab">Pending <span class="badge badge-pill badge-soft-secondary">45</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#references" role="tab" data-toggle="tab">Processing <span class="badge badge-pill badge-soft-secondary">76</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#references" role="tab" data-toggle="tab">Completed <span class="badge badge-pill badge-soft-secondary">76</span></a>
+        </li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="profile">
+          
+
+          <div class="card card-small mb-4">
+            <div class="card-header border-bottom">
+              <small>
+                <label class="sh-ent-lbl"><span>Show</span>
+                  <select class="custom-select form-control-sm sh-ent" (change)="app.filterRange($event.target.value)">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                  entries</label>
+              </small>
+            </div>
+            <div class="col-lg-12 offset-lg-0">
+              <div class="input-group input-group-seamless">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="material-icons">search</i>
+                  </div>
+                </div>
+                <input type="text" class="form-control form-control-lg srh-bx" name="searchString" placeholder="Search"
+                  [(ngModel)]="searchString">
+              </div>
+            </div>
+    
+            <div class="card-body p-0 pb-3">
+    
+              <div class="table-responsive">
+                <div class="text-center">
+                  <app-loading *ngIf="isLoading"></app-loading>
+                </div>
+                <span *ngIf="!isLoading">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th sortable-column="id"></th>
+                        <th (click)="sortName()">Task <i class="material-icons">import_export</i></th>
+                        <th>Esitmated <i class="material-icons">import_export</i></th>
+                        <th>Priority <i class="material-icons">import_export</i></th>
+                        <th>Status <i class="material-icons">import_export</i></th>
+                        <th>Assign By <i class="material-icons">import_export</i></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of task.taskUser">
+                            <td class="">
+                              {{item.taskName}}
+                            </td>
+                            <td class="lo-stats__order-details col-width">
+                              <span>{{ item.description.substring(0, 100) }}</span>
+                            </td>
+                            <td class="lo-stats__status">
+                              <div class="d-table mx-auto">
+                                <span class="badge badge-pill badge-{{item.status}}">{{item.status}}</span>
+                              </div>
+                            </td>
+                            <td class="lo-stats__items text-center text-{{item.priority}}">{{item.priority}}</td>
+                            <td class="lo-stats__total text-center">{{item.estimated_time}}</td>
+                            <td class="lo-stats__items text-center">
+                              {{item.givenBy}}
+                            </td>
+                            <td class="lo-stats__actions">
+                              <div *ngIf="item.status.toString() != 'in-progress'.toString(); else submitBtn" class="btn-group d-table ml-auto" role="group"
+                                aria-label="Basic example">
+                                <button type="button" class="btn btn-sm btn-white" (click)="acceptTask(item.taskId)"><span class="text-success"><i
+                                      class="material-icons">done</i></span>
+                                  Accept</button>
+                                <button type="button" class="btn btn-sm btn-white" (click)="rejectTask(item.taskId)"><span class="text-danger"><i
+                                      class="material-icons">clear</i></span>
+                                  Reject</button>
+                              </div>
+                              <ng-template #submitBtn>
+                                <button type="button" class="btn btn-sm btn-white" (click)="submitTask(item.taskId)"><span class="text-success"><i
+                                      class="material-icons">done_all</i></span>
+                                  Submit</button>
+                              </ng-template>
+                            </td>
+          
+                          </tr>
+                    </tbody>
+                  </table>
+    
+                </span>
+              </div>
+    
+              <div class="text-center">
+                <p class="text-uppercase page-subtitle mb-4" *ngIf="dept.deptList.length == 0">
+                  List is empty!
+                </p>
+              </div>
+    
+            </div>
+    
+            <div class="card-footer text-muted">
+              <small>{{app.end}} out of {{dept.deptList.length}}</small>
+            </div>
+          </div>
+
+
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="buzz">bbb</div>
+        <div role="tabpanel" class="tab-pane" id="references">ccc</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,164 @@
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-lg-8 offset-lg-2 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">New Employee</span>
+      <h3 class="page-title">Create a new employee</h3>
+      <hr />
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+
+
+      <form role="form" [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)">
+        <fieldset>
+
+          <div class="row">
+
+            <div class="col-lg-12">
+
+              <div class="form-group">
+                <label class="formLabel">Employee name</label>
+                <!-- <strong class="text-muted d-block mb-2"><small> name</small>  </strong> -->
+                <input class="form-control" type="text" value="{{empName}}" formControlName="empName">
+                <small class="alertMessage" *ngIf="!rForm.controls['empName'].valid && rForm.controls['empName'].touched">
+                  Employee name field is required
+                </small>
+              </div>
+
+              <div class="form-group">
+                <label class="formLabel">Employee email</label>
+                <input class="form-control" type="email" value="{{empEmail}}" formControlName="empEmail">
+                <small class="alertMessage" *ngIf="!rForm.controls['empEmail'].valid && rForm.controls['empEmail'].touched">
+                  Valid employee email field is required
+                </small>
+              </div>
+
+              <div class="form-group">
+                <label class="formLabel">Employee password</label>
+                <input class="form-control" type="password" value="{{empPassword}}" formControlName="empPassword">
+                <small class="alertMessage" *ngIf="!rForm.controls['empPassword'].valid && rForm.controls['empPassword'].touched">
+                  Employee password field is required
+                </small>
+              </div>
+
+            </div>
+
+
+
+            <div class="col-lg-12">
+              <hr />
+              <label class="formLabel">Employee assignment</label>
+              <strong class="text-muted d-block mb-2"><small>This is where employee is being assign to department,
+                  designation, define role and
+                  categorized them accordingly.</small> </strong>
+              <br />
+            </div>
+
+
+
+
+            <div class="col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Department </label>
+                  </div>
+                  <select class="form-control" formControlName="empDept" (change)="handleEmp($event.target.value)">
+                    <option></option>
+                    <option *ngFor="let item of dept.deptList" value="{{item.id}}">
+                      {{item.name}}
+                    </option>
+                  </select>
+                </div>
+                <small class="alertMessage" *ngIf="!rForm.controls['empDept'].valid && rForm.controls['empDept'].touched">
+                  Select department
+                </small>
+              </div>
+            </div>
+
+            <hr />
+
+            <div class="col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Designation</label>
+                  </div>
+                  <select class="form-control" formControlName="empDesig">
+                    <option></option>
+                    <option *ngFor="let item of desig.desigList" value="{{item.id}}">
+                      {{item.name}}
+                    </option>
+                  </select>
+                </div>
+                <small class="alertMessage" *ngIf="!rForm.controls['empDesig'].valid && rForm.controls['empDesig'].touched">
+                  Select designation
+                </small>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <br />
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Role</label>
+                  </div>
+                  <select class="form-control" formControlName="empRole">
+                    <option></option>
+                    <option *ngFor="let item of rol.rolList" value="{{item.id}}">
+                      {{item.name}}
+                    </option>
+                  </select>
+                </div>
+                <small class="alertMessage" *ngIf="!rForm.controls['empRole'].valid && rForm.controls['empRole'].touched">
+                  Select Role
+                </small>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Manager</label>
+                  </div>
+                  <select class="form-control" formControlName="empMgr">
+                    <option value="0">None</option>
+                    <option *ngFor="let item of emp.empListA" value="{{item.id}}">
+                      {{item.name}}
+                    </option>
+                  </select>
+                </div>
+                <small class="alertMessage" *ngIf="!rForm.controls['empMgr'].valid && rForm.controls['empMgr'].touched">
+                  Select Mger
+                </small>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <hr /><br />
+              <button type="submit" id="submit" class="mb-2 btn btn-primary mr-1  btn-block" [disabled]="!rForm.valid">Create
+                Account</button>
+              <button type="reset" class="mb-2 btn btn-link mr-1 srh-btn btn-block" (click)="app.reset()">Cancel
+                This Account</button>
+            </div>
+
+          </div>
+
+        </fieldset>
+      </form>
+
+
+
+    </div>
+  </div>
+
+</div>

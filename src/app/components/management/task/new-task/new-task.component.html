@@ -1,0 +1,150 @@
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-lg-8 offset-lg-2 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">New Task</span>
+      <h3 class="page-title">Create a new task</h3>
+      <hr />
+    </div>
+  </div>
+  <!-- End Page Header -->
+
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+
+
+      <form role="form" [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)">
+        <fieldset>
+
+
+          <div class="row">
+
+            <div class="col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Department </label>
+                  </div>
+                  <select class="form-control" formControlName="deptId" (change)="onChange($event.target.value)">
+                    <option *ngFor="let item of dept.deptList" value="{{item.id}}">
+                      {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Project </label>
+                  </div>
+                  <select class="form-control" formControlName="projId">
+                    <option *ngFor="let item of proj.projList" value="{{item.id}}">
+                      {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Duration </label>
+                  </div>
+                  <input class="form-control" placeholder="Due Date" formControlName="date" type="date">
+                  <small class="alertMessage" *ngIf="!rForm.controls['date'].valid && rForm.controls['date'].touched">
+                    Task date field is required
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="customSelect01">Priority </label>
+                  </div>
+                  <select class="form-control" formControlName="priority">
+                    <option value="1">Low</option>
+                    <option value="2">Medium</option>
+                    <option value="3">High</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <hr />
+              <label class="formLabel">Task Details</label>
+              <strong class="text-muted d-block mb-2"><small>This is where task details is being defined,
+                  like task name, task description and required skill-set will be defined.</small> </strong>
+              <br />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+
+              <div class="form-group">
+                <label class="formLabel">Task name</label>
+                <input class="form-control" formControlName="taskName" type="text">
+                <small class="alertMessage" *ngIf="!rForm.controls['taskName'].valid && rForm.controls['taskName'].touched">
+                  Task name field is required
+                </small>
+              </div>
+
+              <div class="form-group">
+                <label class="formLabel">Task description</label>
+                <textarea class="form-control" formControlName="taskDes" rows="3"></textarea>
+                <small class="alertMessage" *ngIf="!rForm.controls['taskDes'].valid && rForm.controls['taskDes'].touched">
+                  Task description field is required
+                </small>
+              </div>
+
+              <div class="form-group">
+                <label class="formLabel">Select multiple skill-set</label>
+                <select class="form-control" name="selectedSkills" multiple="multiple" [(ngModel)]="selectedSkills"
+                  formControlName="skills">
+                  <option *ngFor="let item of skil.skilList" (click)="clickedOption()" [ngValue]="item.id">
+                    {{item.name}}
+                  </option>
+                </select>
+
+                <!-- <ng-select [items]="people" [multiple]="true" bindLabel="name" groupBy="gender" [selectableGroup]="true"
+                      [closeOnSelect]="false" bindValue="id" [(ngModel)]="selectedPeople">
+                      <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item.gender |
+                        uppercase}}
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item.name}}
+                      </ng-template>
+                    </ng-select> -->
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-12">
+            <hr /><br />
+            <button type="submit" id="submit" class="mb-2 btn btn-primary mr-1  btn-block" [disabled]="!rForm.valid">Create
+              Task</button>
+            <button type="reset" class="mb-2 btn btn-link mr-1 srh-btn btn-block" (click)="app.reset()">Cancel
+              This Task</button>
+          </div>
+
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
+
+</div>

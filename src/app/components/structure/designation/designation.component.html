@@ -1,0 +1,130 @@
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">Structure</span>
+      <h3 class="page-title">Designation</h3>
+    </div>
+  </div>
+  <!-- End Page Header -->
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+          <h6 class="m-0">{{app.action}} New Designation</h6>
+        </div>
+        <div class="card-body">
+          <form role="form" [formGroup]="rForm" (ngSubmit)="onSubmit(rForm.value)">
+            <fieldset>
+              <div class="form-group">
+                <input class="form-control" placeholder="Designation Name" type="text" [(ngModel)]="desigName" value="{{desigName}}"
+                  formControlName="desigName">
+                <small class="alertMessage" *ngIf="!rForm.controls['desigName'].valid && rForm.controls['desigName'].touched">
+                  Designation name field is required
+                </small>
+              </div>
+
+              <button type="submit" id="submit" class="mb-2 btn btn-white mr-1" [disabled]="!rForm.valid">{{ app.button
+                }}</button>
+              <button type="reset" class="mb-2 btn btn-white mr-1" (click)="app.reset()">Reset</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <span class="file-manager__group-title text-uppercase text-light">Designation List</span>
+        </div>
+      </div>
+
+
+      <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+          <small>
+            <label class="sh-ent-lbl"><span>Show</span>
+              <select class="custom-select form-control-sm sh-ent" (change)="app.filterRange($event.target.value)">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              entries</label>
+          </small>
+        </div>
+        <div class="col-lg-12 offset-lg-0">
+          <div class="input-group input-group-seamless">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="material-icons">search</i>
+              </div>
+            </div>
+            <input type="text" class="form-control form-control-lg srh-bx" name="searchString" placeholder="Search"
+              [(ngModel)]="searchString">
+            <div class="btn-group">
+              <button class="btn btn-link dropdown-toggle srh-btn" type="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                Sort order
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" (click)="sortAsc()">Asc</a>
+                <a class="dropdown-item" (click)="sortDesc()">Desc</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body p-0 pb-3">
+
+          <div class="table-responsive">
+            <div class="text-center">
+              <app-loading *ngIf="isLoading"></app-loading>
+            </div>
+            <span *ngIf="!isLoading">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th (click)="sortName()">Designation Name <i class="material-icons">import_export</i></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr *ngFor="let item of desig.desigList | filter : 'name' : searchString | slice: 0: app.end; index as i">
+                    <td>{{i+1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>
+                      <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+                        <button type="button" class="btn btn-white active-light" (click)="onUpdate(item.id, item.name)">
+                          <a class="upd-btn" href="/structure/designation#top">
+                            <i class="material-icons">create</i> Update
+                          </a>
+                        </button>
+                        <button type="button" class="btn btn-danger" (click)="onDelete(item.id)">
+                          <i class="material-icons">delete</i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </span>
+          </div>
+
+          <div class="text-center">
+            <p class="text-uppercase page-subtitle mb-4" *ngIf="desig.desigList.length == 0">
+              List is empty!
+            </p>
+          </div>
+
+        </div>
+        <div class="card-footer text-muted">
+          <small>{{app.end}} out of {{desig.desigList.length}}</small>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
