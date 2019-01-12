@@ -22,21 +22,33 @@
           <div class="row mb-3">
             <div class="col w-50">
               <span>Email</span>
-              <span>{{email}}</span>
+              <span><small>{{email}}</small></span>
             </div>
             <div class="col w-50">
-              <span>Location</span>
-              <span>{{user$.address}}</span>
+              <span>Role</span>
+              <span><small>{{role}}</small></span>
             </div>
           </div>
           <div class="row">
             <div class="col w-50">
-              <span>Phone</span>
-              <span>{{user$.phone}}</span>
+              <span>Department</span>
+              <span><small>{{department}}</small></span>
             </div>
             <div class="col w-50">
-              <span>Role</span>
-              <span>{{user$.role}}</span>
+              <span>Designation</span>
+              <span><small>{{designation}}</small></span>
+            </div>
+          </div>
+        </div>
+        <div class="user-details__user-data border-bottom p-4">
+          <div class="row mb-3">
+            <div class="col w-50">
+              <span></span>
+              <span><small><strong class="dat">Account Creation: </strong>{{created_at}}</small></span>
+            </div>
+            <div class="col w-50">
+              <span></span>
+              <span><small><strong class="dat">Profile Last Update: </strong>{{updated_at}}</small></span>
             </div>
           </div>
         </div>
@@ -67,7 +79,7 @@
             <div class="col-6 col-sm-3 text-center">
               <ul class="nav nav-me" role="tablist">
                 <a href="#pending" role="tab" data-toggle="tab">
-                  <h4 class="m-0">{{task.taskListUser.length}}</h4>
+                  <h4 class="m-0">{{pendingTotal}}</h4>
                   <span class="text-light text-uppercase">Pending</span>
                 </a>
               </ul>
@@ -75,7 +87,7 @@
             <div class="col-6 col-sm-3 text-center">
               <ul class="nav nav-me" role="tablist">
                 <a href="#complete" role="tab" data-toggle="tab">
-                  <h4 class="m-0">4</h4>
+                  <h4 class="m-0">{{completeTotal}}</h4>
                   <span class="text-light text-uppercase">Complete</span>
                 </a>
               </ul>
@@ -83,8 +95,8 @@
             <div class="col-6 col-sm-3 text-center">
               <ul class="nav nav-me" role="tablist">
                 <a href="#project" role="tab" data-toggle="tab">
-                  <h4 class="m-0">4</h4>
-                  <span class="text-light text-uppercase">Projects</span>
+                  <h4 class="m-0">{{task.taskUser.length}}</h4>
+                  <span class="text-light text-uppercase">Approved</span>
                 </a>
               </ul>
             </div>
@@ -96,9 +108,9 @@
               <div class="progress-wrapper">
                 <span class="progress-label">Workload</span>
                 <div class="progress progress-sm">
-                  <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0"
-                    aria-valuemax="100" style="width: 80%;">
-                    <span class="progress-value">80%</span>
+                  <div class="progress-bar progress-bar-striped" role="progressbar" attr.aria-valuenow="{{workload}}" aria-valuemin="0"
+                    aria-valuemax="100" [style.width.%]="workload">
+                    <span class="progress-value">{{workload}}%</span>
                   </div>
                 </div>
               </div>
@@ -107,9 +119,9 @@
               <div class="progress-wrapper">
                 <span class="progress-label">Performance</span>
                 <div class="progress progress-sm">
-                  <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="92"
-                    aria-valuemin="0" aria-valuemax="100" style="width: 92%;">
-                    <span class="progress-value">92%</span>
+                  <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [attr.aria-valuenow]="progress"
+                    aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress">
+                    <span class="progress-value">{{progress}}%</span>
                   </div>
                 </div>
               </div>
@@ -132,63 +144,25 @@
                     <th>Task</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Priority</th>
-                    <th class="text-center">Duration</th>
-                    <th class="">Given By</th>
-                    <th class="text-right"></th>
                   </tr>
                 </thead>
-                <!-- description: "saddasdas"
-estimated_time: "60"
-givenById: "KOYJRZSnXsD83GUShAFp6DszpucysoshpF5h"
-givenByName: "qwerty"
-givenToId: "kXnUmSDgC81JJ1PsqaRWwUiWArwDJFHjmStp"
-givenToName: "Irtiza"
-priority: 2
-status: "pending"
-taskId: "QnATprJuP55V9HJEwTPpTcj53itooGUgUmZE"
-taskName: "saddsa" -->
                 <tbody>
                   <tr *ngFor="let item of task.taskUser">
                     <td class="col-width">
-                      {{item.taskName}}<br />
-                      <small>{{item.description}}</small>
+                      <strong *ngIf="item.givenById == assignedBy" class="clip"><i class="material-icons">info</i>
+                        You've
+                        Assigned This Task to
+                        {{item.givenToName}}</strong><br/>
+                      <b class="dat">{{item.taskName}}</b><br />
+                      <small>{{item.description}}</small><br/>
+                      <small><strong class='dat'>Assigned By: </strong>{{item.givenByName}}</small>
                     </td>
                     <td class="lo-stats__status">
                       <div class="d-table mx-auto">
                         <span class="badge badge-pill badge-{{item.status}}">{{item.status}}</span>
                       </div>
                     </td>
-                    <td class="lo-stats__items text-center text-{{item.priority}}">{{item.priority}}</td>
-                    <td class="text-center">{{estimated_time}}</td>
-                    <td>{{item.givenByName}}</td>
-                    <td class="lo-stats__actions">
-                      <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                        <button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">
-                          More
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" (click)="onUpdate(item.id)"><span class="text-success"><i class="material-icons">done</i></span>
-                            Accept</a>
-                          <a class="dropdown-item" (click)="onDelete(item.id)"><span class="text-danger"><i class="material-icons">clear</i></span>
-                            Delete</a>
-                        </div>
-                      </div>
-                      <!-- <div *ngIf="item.status.toString() != 'in-progress'.toString(); else submitBtn" class="btn-group d-table ml-auto"
-                        role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-sm btn-white" (click)="acceptTask(item.taskId)"><span
-                            class="text-success"><i class="material-icons">done</i></span>
-                          Accept</button>
-                        <button type="button" class="btn btn-sm btn-white" (click)="rejectTask(item.taskId)"><span
-                            class="text-danger"><i class="material-icons">clear</i></span>
-                          Reject</button>
-                      </div> -->
-                      <!-- <ng-template #submitBtn>
-                        <button type="button" class="btn btn-sm btn-white" (click)="submitTask(item.taskId)"><span
-                            class="text-success"><i class="material-icons">done_all</i></span>
-                          Submit</button>
-                      </ng-template> -->
-                    </td>
+                    <td class="lo-stats__items text-center text-{{item.priority}}"></td>
                   </tr>
                 </tbody>
               </table>

@@ -133,66 +133,40 @@
             </div>
           </div>
           <table class="table mb-0">
-              <thead class="py-2 bg-light text-semibold border-bottom">
-                <tr>
-                  <th>Task</th>
-                  <th></th>
-                  <th class="text-center">Status</th>
-                  <th class="text-center">Priority</th>
-                  <th class="text-center">Duration</th>
-                  <th class="text-center">Given By</th>
-                  <th class="text-right">Actions</th>
-                </tr>
-              </thead>
-
-<!-- created_at: "2018-12-07 15:24:02"
-description: "qwertyabc"
-estimated_time: "60"
-id: "7Q8MBZcXgxQWBzTtMF4YkoVVYunzZTbLHOM7"
-name: "qwertyabc"
-priority: 2
-projId: "j4he3gORlNcwMMbHQeqha8XEnr7AfFmxeP3e"
-required_skills: "FV0pTTFwohpqU1sqPIFCjth6ZTfyKHydbNXE"
-taskCreatorId: "KOYJRZSnXsD83GUShAFp6DszpucysoshpF5h"
-updated_at: "2018-12-07 15:24:02" -->
-              <tbody>
-                <tr *ngFor="let item of task.taskList">
-                  <td class="">
-                    {{item.name}}
-                  </td>
-                  <td class="lo-stats__order-details col-width">
-                    <span>{{ item.description.substring(0, 100) }}</span>
-                  </td>
-                  <td class="lo-stats__status">
-                    <div class="d-table mx-auto">
-                      <span class="badge badge-pill badge-{{item.status}}">{{item.status}}</span>
-                    </div>
-                  </td>
-                  <td class="lo-stats__items text-center text-{{item.priority}}">{{item.priority}}</td>
-                  <td class="lo-stats__total text-center">{{item.estimated_time}}</td>
-                  <td class="lo-stats__items text-center">
-                    {{item.givenBy}}
-                  </td>
-                  <td class="lo-stats__actions">
-                    <!-- <div *ngIf="item.status.toString() != 'in-progress'.toString(); else submitBtn" class="btn-group d-table ml-auto" role="group"
-                      aria-label="Basic example">
-                      <button type="button" class="btn btn-sm btn-white" (click)="acceptTask(item.taskId)"><span class="text-success"><i
-                            class="material-icons">done</i></span>
-                        Accept</button>
-                      <button type="button" class="btn btn-sm btn-white" (click)="rejectTask(item.taskId)"><span class="text-danger"><i
-                            class="material-icons">clear</i></span>
-                        Reject</button>
-                    </div> -->
-                    <ng-template #submitBtn>
-                      <button type="button" class="btn btn-sm btn-white" (click)="submitTask(item.taskId)"><span class="text-success"><i
-                            class="material-icons">done_all</i></span>
-                        Submit</button>
-                    </ng-template>
-                  </td>
-
-                </tr>
-              </tbody>
-            </table>
+            <thead class="py-2 bg-light text-semibold border-bottom">
+              <tr>
+                <th>Task</th>
+                <th>Description</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Duration</th>
+                <th class="text-center">Assigned By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of task.taskList">
+                <td class="">
+                  {{item.name}}
+                </td>
+                <td class="col-width">
+                  <!-- <span>{{ item.description.substring(0, 100) }}</span> -->
+                  <div class="go-stats__meta">
+                    <span class="mr-2"><strong>{{ item.description.substring(0, 100) }}</strong></span><br />
+                    <span class="d-block d-sm-inline">
+                      <strong class="dat">Priority: </strong><span class="text-{{item.priority}}"></span></span>
+                  </div>
+                </td>
+                <td class="lo-stats__status">
+                  <div class="d-table mx-auto">
+                    <span class="badge badge-pill badge-{{item.status}}">{{item.status}}</span>
+                  </div>
+                </td>
+                <td class="lo-stats__total text-center">{{item.estimated_time}}</td>
+                <td class="lo-stats__items text-center">
+                  {{item.givenBy}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

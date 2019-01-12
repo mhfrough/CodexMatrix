@@ -136,15 +136,17 @@ export class NewEmployeeComponent implements OnInit {
         if (res.status == 1) {
           this.isLoading = false;
           console.log(res);
-          this.alerts.push({
+          this.app.alerts.push({
             type: 'success',
+            icon: 'priority_high',
             msg: `${res.message}`,
             timeout: 5000
           });
         } else {
           this.isLoading = false;
           this.alerts.push({
-            type: 'danger',
+            type: 'warning',
+            icon: 'warning',
             msg: `${res.message}`,
             timeout: 5000
           });
@@ -166,6 +168,7 @@ export class NewEmployeeComponent implements OnInit {
           this.isLoading = false;
           this.alerts.push({
             type: 'info',
+            icon: 'priority_high',
             msg: `${res.message}`,
             timeout: 5000
           });
@@ -173,6 +176,7 @@ export class NewEmployeeComponent implements OnInit {
           this.isLoading = false;
           this.alerts.push({
             type: 'warning',
+            icon: 'warning',
             msg: `${res.message}`,
             timeout: 5000
           });
@@ -180,7 +184,12 @@ export class NewEmployeeComponent implements OnInit {
       })
     }
 
+    this.rForm.reset();
+    this.app.reset();
+
   }
+
+  
 
   onUpdate(id: String, name: String, email: String, password: String
     , deptId: String, mgr: String) {

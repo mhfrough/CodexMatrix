@@ -13,16 +13,29 @@ import { ViewEmployeesComponent } from '../view-employees/view-employees.compone
 export class EmployeeProfileComponent implements OnInit {
 
   @ViewChild(ViewEmployeesComponent) users;
-  abc:string;
-
 
   user$: string;
 
   name: string = '';
   email: string = '';
+  manager: string = '';
+  department: string = '';
   designation: string = '';
   role: string = '';
-pending: number;
+  created_at: string = '';
+  updated_at: string = '';
+
+  assignedBy: string = '';
+
+  pendingTotal: number = 0;
+  inprogressTotal: number = 0;
+  completeTotal: number = 0;
+  approveTotal: number = 0;
+  totalTasks: number = 0;
+
+  workload: number = 0;
+  progress: number = 0;
+
 
   constructor(private route: ActivatedRoute, private task: TaskService,
     private dept: DeptService, private emp: EmpService) {
@@ -30,57 +43,56 @@ pending: number;
   }
 
   ngOnInit() {
-    // pending task
-    this.task.getUserTask(this.user$, "d442599c-c4e7-11e8-941d-d0bf9ce16c80");
-    console.log(32);
-    console.log(this.task.taskListUser);
-    this.pending = this.task.taskListUser.length;
-    // console.log(this.task.taskListUser.length)
+    this.emp.getEmpDetails(this.user$).subscribe(res => {
+      console.log(res)
 
-    // find all employees from all departments
-    for (let array of this.dept.deptList) {
-      this.emp.getEmp(array.id, false);
-    }
-
-    this.emp.empList;
-
-    // console.log(this.emp.empList);
-
-    // if (this.user$ != '') {
-    this.delay(10000).then(any => {
-      this.name = this.emp.empList.find(x => x.id == this.user$).name;
-      this.email = this.emp.empList.find(x => x.id == this.user$).email;
+      this.name = res.data.name;
+      this.email = res.data.email
+      this.manager = res.data.mgrName;
+      this.department = res.data.departmentName;
+      this.designation = res.data.designationName;
+      this.role = res.data.roleName;
+      this.created_at = res.data.created_at;
+      this.updated_at = res.data.updated_at;
     });
-    // }
 
-    // console.log("user id");
-    // console.log(this.users)
+    this.assignedBy = localStorage.getItem('id');
+    this.allTasks();
+
+    this.delay(3000).then(any => {
+      for (let array of this.task.taskUser) {
+        if (array.status == 'pending') {
+          this.pendingTotal++;
+        }
+        if (array.status == 'in-progress') {
+          this.inprogressTotal++;
+        }
+        if (array.status == 'completed') {
+          this.completeTotal++;
+        }
+        if (array.status == 'approved') {
+          this.approveTotal++;
+        }
+      }
+
+      this.workload = (((this.pendingTotal + this.inprogressTotal) / this.task.taskUser.length) * 100);
+      this.progress = (((this.completeTotal + this.approveTotal) / this.task.taskUser.length) * 100);
+
+      console.log(this.workload);
+      console.log(this.progress);
+    });
   }
 
-  ngAfterViewInit() {
-    this.abc = this.users;
-    console.log(this.abc);
+  allTasks() {
+    this.task.taskUser = [];
+    this.task.getUserTask(localStorage.getItem('id'), "d442599c-c4e7-11e8-941d-d0bf9ce16c80");
+    this.task.getUserTask(localStorage.getItem('id'), "fd1783d9-c4e7-11e8-941d-d0bf9ce16c80");
+    this.task.getUserTask(localStorage.getItem('id'), "d442919d-c4e7-11e8-941d-d0bf9ce16c80");
+    this.task.getUserTask(localStorage.getItem('id'), "f1bc127a-c4e7-11e8-941d-d0bf9ce16c80");
+    this.task.getUserTask(localStorage.getItem('id'), "f1bc2bcc-c4e7-11e8-941d-d0bf9ce16c80");
   }
 
   async delay(ms: number) {
-    await new Promise(resolve => setTimeout(() => resolve(), ms));
+    await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("fired"));
   }
-
-  handleInProgressTask() {
-    // in-progress task
-    this.task.getUserTask(this.user$, "d442919d-c4e7-11e8-941d-d0bf9ce16c80");
-  }
-
-  handlePendingTask() {
-    // pending task
-    this.task.getUserTask(this.user$, "d442599c-c4e7-11e8-941d-d0bf9ce16c80");
-  }
-
-  handleCompletedTask() {
-    // completed task
-    this.task.getUserTask(this.user$, "f1bc127a-c4e7-11e8-941d-d0bf9ce16c80");
-  }
-
-
-
 }

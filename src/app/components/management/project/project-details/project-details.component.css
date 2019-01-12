@@ -33,13 +33,22 @@ th{
     
     .text-1{
         color:#17c671;
-    }
-    .text-2{
+      }
+      .text-1::after{
+        content: 'Low';
+      }
+      .text-2{
         color:#ffb400;
-    }
-    .text-3{
+      }
+      .text-2::after{
+        content: 'Medium';
+      }
+      .text-3{
         color:#c4183c;
-    }
+      }
+      .text-3::after{
+        content: 'High';
+      }
     
     .col-width {
         width: 30%;

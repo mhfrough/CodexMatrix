@@ -26,6 +26,10 @@ export class ProjService {
     })
   }
 
+  getProjDetails(data: string) {
+    return this.http.get<any>(g.apiURL + '/get-project-details?projectId=' + data);
+  }
+
   getProjMembers(data: String) {
     console.log(13);
     this.projMembersList = [];

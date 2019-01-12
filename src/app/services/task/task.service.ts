@@ -22,6 +22,7 @@ export class TaskService {
     this.taskList = [];
     return this.http.get<any>(g.apiURL + '/get-all-tasks-by-project?projId=' + data
     ).subscribe(res => {
+      console.log(res)
       res.data.forEach(element => {
         this.taskList.push(element);
       });

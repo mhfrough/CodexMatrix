@@ -134,7 +134,7 @@
                           Reject</button>
                       </div>
 
-                      <div *ngIf="item.status == 'in-progress'" class="btn-group d-table ml-auto" role="group"
+                      <div *ngIf="item.status == 'in-progress' && item.givenById.toString() != assignedBy" class="btn-group d-table ml-auto" role="group"
                         aria-label="Basic example">
                         <button type="button" class="btn btn-sm btn-white" (click)="submitTask(item.taskId)"><span
                             class="text-success"><i class="material-icons">done_all</i></span>
@@ -151,13 +151,12 @@
                           Reject</button>
                       </div>
 
-
-                      <div class="clip" *ngIf="item.givenById.toString() == assignedBy && item.status == 'pending'">
+                      <div class="clip" *ngIf="item.givenById.toString() == assignedBy && item.status == 'in-progress'">
                         <strong>
                           <i class="material-icons">info</i> Waiting
                         </strong>
                         <p class="small text-muted mb-0">
-                          Once user make decision then you'll be able to take action
+                          Once user submit Task then you'll be able to take action
                         </p>
                       </div>
 

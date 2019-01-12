@@ -25,34 +25,35 @@ export class ProjectDetailsComponent implements OnInit {
   created_at: string;
   updated_at: string;
 
+
   constructor(public app: AppComponent, public proj: ProjService, public task: TaskService,
     public dept: DeptService, public route: ActivatedRoute) {
     this.route.params.subscribe(params => this.project$ = params.id);
   }
 
   ngOnInit() {
-    this.dept.deptList = [];
-    this.dept.getDept();
-
-    for (let array of this.dept.deptList) {
-      this.proj.getProj(array.id);
-    }
-
-    this.proj.getProjMembers(this.project$);
     this.task.getTask(this.project$);
+    this.proj.getProjMembers(this.project$);
+    this.proj.getProjDetails(this.project$).subscribe(res => {
+      console.log(res);
+      this.name = res.data.projectDetails.name;
+      this.description = res.data.projectDetails.description;
+      this.department = res.data.projectDetails.departmentName;
+      this.category = res.data.projectDetails.categoryName;
+      // this.taskTotal = res.data.projectDetails.
+      this.created_at = res.data.projectDetails.created_at;
+      this.updated_at = res.data.projectDetails.updated_at;
+    });
 
     this.delay(3000).then(any => {
-
-      this.name = this.proj.projList.find(x => x.id == this.project$).name;
-      this.description = this.proj.projList.find(x => x.id == this.project$).description;
-      this.created_at = this.proj.projList.find(x => x.id == this.project$).created_at;
-      this.updated_at = this.proj.projList.find(x => x.id == this.project$).updated_at;
 
       this.employeeTotal = this.proj.projMembersList.length;
       this.taskTotal = this.task.taskList.length;
 
-      console.log(this.task.taskList);
+      console.log(this.proj.projList)
+
     });
+
   }
 
   async delay(ms: number) {

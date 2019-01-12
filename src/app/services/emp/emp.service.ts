@@ -34,6 +34,10 @@ export class EmpService {
       })
   }
 
+  getEmpDetails(data: string) {
+    return this.http.get<any>(g.apiURL + '/get-emp-details?userId=' + data)
+  }
+
   getAllEmp(data: String) {
     this.allEmpList = [];
     return this.http.get<any>(g.apiURL + '/get-all-empls?companyId=' + data)
