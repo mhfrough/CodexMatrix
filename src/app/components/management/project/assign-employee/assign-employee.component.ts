@@ -19,6 +19,10 @@ export class AssignEmployeeComponent implements OnInit {
   dismissible = true;
 
   isUpdate: boolean = false;
+  deptId: any;
+  projId: any;
+  empId: any;
+  desigId: any;
 
   alerts: any[] = [];
   isLoading: boolean = false;
@@ -67,20 +71,23 @@ export class AssignEmployeeComponent implements OnInit {
       if (res.status == 1) {
         this.isLoading = false;
         // Department Creation Successful
-        this.alerts.push({
+        this.app.alerts.push({
           type: 'success',
+          icon: 'done',
           msg: `${res.message}`,
           timeout: 5000
         });
       } else {
         this.isLoading = false;
-        this.alerts.push({
+        this.app.alerts.push({
           type: 'warning',
+          icon: 'warning',
           msg: `${res.message}`,
           timeout: 5000
         });
       }
     })
+    this.rForm.reset();
   }
 
 }

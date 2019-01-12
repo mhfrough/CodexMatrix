@@ -74,6 +74,7 @@ export class ViewEmployeesComponent implements OnInit {
       this.isLoading = false;
       this.alerts.push({
         type: 'danger',
+        icon: 'report',
         msg: `${res.message}`,
         timeout: 5000
       });

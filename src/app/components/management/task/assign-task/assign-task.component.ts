@@ -26,6 +26,8 @@ export class AssignTaskComponent implements OnInit {
     public fb: FormBuilder, public proj: ProjService, public dept: DeptService,
     public app: AppComponent, private db: AngularFireDatabase) {
     this.rForm = fb.group({
+      'deptId': [null, Validators.required],
+      'projId': [null, Validators.required],
       'taskId': [null, Validators.required],
       'givenTo': [null, Validators.required],
       'givenBy': [null, Validators.required],
@@ -64,24 +66,27 @@ export class AssignTaskComponent implements OnInit {
         console.log(res);
 
         // this.db.database.ref('users/' + localStorage.getItem('id')).
-// this.db.object('users/'+ localStorage.getItem('id')).valueChanges()
+        // this.db.object('users/'+ localStorage.getItem('id')).valueChanges()
 
         this.isLoading = false;
-        this.alerts.push({
+        this.app.alerts.push({
           type: 'success',
+          icon: 'done',
           msg: `${res.message}`,
           timeout: 5000
         });
       } else {
         console.log(false)
         this.isLoading = false;
-        this.alerts.push({
-          type: 'success',
+        this.app.alerts.push({
+          type: 'warning',
+          icon: 'warning',
           msg: `${res.message}`,
           timeout: 5000
         });
       }
     })
+    this.rForm.reset();
   }
 
 

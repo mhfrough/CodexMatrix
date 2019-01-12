@@ -3,8 +3,9 @@ import { AppComponent } from 'src/app/app.component';
 import { TaskComponent } from '../../task/task/task.component';
 import { ProjService } from 'src/app/services/proj/proj.service';
 import { TaskService } from 'src/app/services/task/task.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeptService } from 'src/app/services/dept/dept.service';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-project-details',
@@ -25,13 +26,19 @@ export class ProjectDetailsComponent implements OnInit {
   created_at: string;
   updated_at: string;
 
+  pendingTotal: number = 0;
+  inprogressTotal: number = 0;
+  completeTotal: number = 0;
+  rejectTotal: number = 0;
+  approveTotal: number = 0;
 
   constructor(public app: AppComponent, public proj: ProjService, public task: TaskService,
-    public dept: DeptService, public route: ActivatedRoute) {
+    public dept: DeptService, public route: ActivatedRoute, public router: Router) {
     this.route.params.subscribe(params => this.project$ = params.id);
   }
 
   ngOnInit() {
+    
     this.task.getTask(this.project$);
     this.proj.getProjMembers(this.project$);
     this.proj.getProjDetails(this.project$).subscribe(res => {
@@ -50,10 +57,31 @@ export class ProjectDetailsComponent implements OnInit {
       this.employeeTotal = this.proj.projMembersList.length;
       this.taskTotal = this.task.taskList.length;
 
-      console.log(this.proj.projList)
 
+      for (let array of this.task.taskList) {
+        if(array.taskStatus == 'pending'){
+          this.pendingTotal++;
+        }
+        if(array.taskStatus == 'in-progress'){
+          this.inprogressTotal++;
+        }
+        if(array.taskStatus == 'completed'){
+          this.completeTotal++;
+        }
+        if(array.taskStatus == 'rejected'){
+          this.rejectTotal++;
+        }
+        if(array.taskStatus == 'approved'){
+          this.approveTotal++;
+        }
+      }
     });
 
+  }
+
+  href(data) {
+    console.log(data)
+    this.router.navigate(['/employee/' + data]);
   }
 
   async delay(ms: number) {

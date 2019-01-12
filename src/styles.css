@@ -106,6 +106,14 @@
     color: inherit;
 }
 
+.href{
+    color:inherit;
+}
+.href:hover{
+    text-decoration: underline !important;
+    color: #000;
+}
+
 .pull-right{
     float: right;
 }

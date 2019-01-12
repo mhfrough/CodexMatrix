@@ -22,6 +22,7 @@ export class MyTaskComponent implements OnInit {
   assignedBy: string = '';
   public searchString: string;
   taskName: String = '';
+  isLoading: Boolean = false;
 
   myTasks: any[] = [];
   assignedTasks: any[];
@@ -102,6 +103,7 @@ export class MyTaskComponent implements OnInit {
   }
 
   acceptTask(data) {
+    this.isLoading = true;
     console.log(data);
     this.taskStatus = {
       userId: localStorage.getItem('id'),
@@ -110,10 +112,13 @@ export class MyTaskComponent implements OnInit {
     }
     this.task.taskStatus(this.taskStatus).subscribe(res => {
       console.log(res);
+      this.allTasks();
+      this.isLoading = false;
     });
   }
 
   rejectTask(data){
+    this.isLoading = true;
     console.log(data);
     this.taskStatus = {
       userId: localStorage.getItem('id'),
@@ -122,10 +127,13 @@ export class MyTaskComponent implements OnInit {
     }
     this.task.taskStatus(this.taskStatus).subscribe(res => {
       console.log(res);
+      this.allTasks();
+      this.isLoading = false;
     });
   }
 
   submitTask(data){
+    this.isLoading = true;
     console.log(data);
     this.taskStatus = {
       userId: localStorage.getItem('id'),
@@ -134,10 +142,13 @@ export class MyTaskComponent implements OnInit {
     }
     this.task.taskStatus(this.taskStatus).subscribe(res => {
       console.log(res);
+      this.allTasks();
+      this.isLoading = false;
     });
   }
 
   approveTask(data){
+    this.isLoading = true;
     console.log(data);
     this.taskStatus = {
       userId: localStorage.getItem('id'),
@@ -146,6 +157,8 @@ export class MyTaskComponent implements OnInit {
     }
     this.task.taskStatus(this.taskStatus).subscribe(res => {
       console.log(res);
+      this.allTasks();
+      this.isLoading = false;
     });
   }
 

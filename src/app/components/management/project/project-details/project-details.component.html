@@ -46,7 +46,7 @@
           <div class="d-flex px-3">
             <div class="stats-small__data">
               <span class="stats-small__label mb-1 text-uppercase">Pending Task</span>
-              <h6 class="stats-small__value count m-0">{{proj.projMembersList.length}}</h6>
+              <h6 class="stats-small__value count m-0">{{pendingTotal}}</h6>
             </div>
             <div class="stats-small__data text-right align-items-center">
               <i class="material-icons size-32">short_text</i>
@@ -61,7 +61,7 @@
           <div class="d-flex px-3">
             <div class="stats-small__data">
               <span class="stats-small__label mb-1 text-uppercase">Complete Task</span>
-              <h6 class="stats-small__value count m-0">{{proj.projMembersList.length}}</h6>
+              <h6 class="stats-small__value count m-0">{{completeTotal}}</h6>
             </div>
             <div class="stats-small__data text-right align-items-center">
               <i class="material-icons size-32">done_all</i>
@@ -124,11 +124,15 @@
             <div class="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
               <div class="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0" data-toggle="buttons">
                 <label class="btn btn-white">
-                  <input type="radio" name="options" id="option1" autocomplete="off"> All </label>
+                  <input type="radio" name="options" id="option1" autocomplete="off"> Tasks {{task.taskList.length}} </label>
                 <label class="btn btn-white">
-                  <input type="radio" name="options" id="option2" autocomplete="off"> Pending </label>
+                  <input type="radio" name="options" id="option2" autocomplete="off"> Pending {{pendingTotal}}</label>
+                  <label class="btn btn-white">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> In-Progress {{inprogressTotal}}</label>
                 <label class="btn btn-white">
-                  <input type="radio" name="options" id="option2" autocomplete="off"> Completed </label>
+                  <input type="radio" name="options" id="option2" autocomplete="off"> Completed {{completeTotal}}</label>
+                  <label class="btn btn-white">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Approved {{approveTotal}}</label>
               </div>
             </div>
           </div>
@@ -138,7 +142,6 @@
                 <th>Task</th>
                 <th>Description</th>
                 <th class="text-center">Status</th>
-                <th class="text-center">Duration</th>
                 <th class="text-center">Assigned By</th>
               </tr>
             </thead>
@@ -157,12 +160,10 @@
                 </td>
                 <td class="lo-stats__status">
                   <div class="d-table mx-auto">
-                    <span class="badge badge-pill badge-{{item.status}}">{{item.status}}</span>
+                    <span class="badge badge-pill badge-{{item.taskStatus}}">{{item.taskStatus}}</span>
                   </div>
                 </td>
-                <td class="lo-stats__total text-center">{{item.estimated_time}}</td>
-                <td class="lo-stats__items text-center">
-                  {{item.givenBy}}
+                <td class="lo-stats__items text-center">{{item.taskCreatorName}}
                 </td>
               </tr>
             </tbody>
@@ -179,7 +180,7 @@
         <div class="card-body p-0">
           <ul class="list-group list-group-small list-group-flush">
             <li class="list-group-item d-flex px-3" *ngFor="let item of proj.projMembersList | filter : 'name' : searchString | slice: 0: app.end; index as i">
-              <span class="text-semibold text-fiord-blue">{{item.userName}}</span>
+              <span class="text-semibold text-fiord-blue"><a (click)="href(item.userId)" class="href">{{item.userName}}</a></span>
               <span class="ml-auto text-right text-semibold text-reagent-gray">{{item.designationName}}</span>
             </li>
           </ul>

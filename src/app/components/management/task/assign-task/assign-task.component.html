@@ -27,13 +27,16 @@
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="customSelect01">Department</label>
                 </div>
-                <select class="form-control" (change)="deptHandle($event.target.value)">
+                <select class="form-control" formControlName="deptId" (change)="deptHandle($event.target.value)">
                   <option></option>
                   <option *ngFor="let item of dept.deptList" value="{{item.id}}">
                     {{item.name}}
                   </option>
                 </select>
               </div>
+              <small class="alertMessage" *ngIf="!rForm.controls['deptId'].valid && rForm.controls['deptId'].touched">
+                  Department field is required
+                </small>
             </div>
 
             <div class="form-group">
@@ -41,13 +44,16 @@
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="customSelect01">Project</label>
                 </div>
-                <select class="form-control" (change)="onChange($event.target.value)">
+                <select class="form-control" formControlName="projId" (change)="onChange($event.target.value)">
                   <option></option>
                   <option *ngFor="let item of proj.projList" value="{{item.id}}">
                     {{item.name}}
                   </option>
                 </select>
               </div>
+              <small class="alertMessage" *ngIf="!rForm.controls['projId'].valid && rForm.controls['projId'].touched">
+                  Project field is required
+                </small>
             </div>
 
 
@@ -64,6 +70,9 @@
                   </option>
                 </select>
               </div>
+              <small class="alertMessage" *ngIf="!rForm.controls['taskId'].valid && rForm.controls['taskId'].touched">
+                  Task field is required
+                </small>
             </div>
 
             <div class="form-group">
@@ -91,6 +100,9 @@
                   </option>
                 </select>
               </div>
+              <small class="alertMessage" *ngIf="!rForm.controls['givenTo'].valid && rForm.controls['givenTo'].touched">
+                  Assigned task field is required
+                </small>
             </div>
 
           </div>

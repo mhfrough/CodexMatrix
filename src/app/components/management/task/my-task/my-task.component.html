@@ -99,31 +99,7 @@
                       {{item.givenByName}}
                     </td>
                     <td class="lo-stats__actions">
-                      <!-- <div *ngIf="item.givenById.toString() != assignedBy; else waiting" class="btn-group d-table ml-auto"
-                        role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-sm btn-white" (click)="acceptTask(item.taskId)"><span
-                            class="text-success"><i class="material-icons">done</i></span>
-                          Accept</button>
-                        <button type="button" class="btn btn-sm btn-white" (click)="rejectTask(item.taskId)"><span
-                            class="text-danger"><i class="material-icons">clear</i></span>
-                          Reject</button>
-                      </div>
-                      <ng-template #submitBtn>
-                        <button type="button" class="btn btn-sm btn-white" (click)="submitTask(item.taskId)"><span
-                            class="text-success"><i class="material-icons">done_all</i></span>
-                          Submit</button>
-                      </ng-template>
-                      <ng-template #waiting>
-                        <div class="clip">
-                          <strong>
-                            <i class="material-icons">info</i> Waiting
-                          </strong>
-                          <p class="small text-muted mb-0">
-                            Once user make decision then you'll be able to take action
-                          </p>
-                        </div>
-                      </ng-template> -->
-
+                      
                       <div *ngIf="item.status == 'pending' &&  item.givenById.toString() != assignedBy" class="btn-group d-table ml-auto"
                         role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-sm btn-white" (click)="acceptTask(item.taskId)"><span
@@ -135,6 +111,13 @@
                       </div>
 
                       <div *ngIf="item.status == 'in-progress' && item.givenById.toString() != assignedBy" class="btn-group d-table ml-auto" role="group"
+                        aria-label="Basic example">
+                        <button type="button" class="btn btn-sm btn-white" (click)="submitTask(item.taskId)"><span
+                            class="text-success"><i class="material-icons">done_all</i></span>
+                          Submit</button>
+                      </div>
+
+                      <div *ngIf="item.status == 'rejected' && item.givenById.toString() != assignedBy" class="btn-group d-table ml-auto" role="group"
                         aria-label="Basic example">
                         <button type="button" class="btn btn-sm btn-white" (click)="submitTask(item.taskId)"><span
                             class="text-success"><i class="material-icons">done_all</i></span>

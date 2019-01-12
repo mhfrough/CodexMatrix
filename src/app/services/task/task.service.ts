@@ -9,7 +9,7 @@ import { TaskReq, TaskPut, TaskAct, AssigTaskReq, TaskStatus } from 'src/app/int
 })
 export class TaskService {
 
-  taskList: String[] = [];
+  taskList: any[] = [];
   taskUser: any[] = [];
   taskListUser: String[] = [];
   taskListDept: String[] = [];

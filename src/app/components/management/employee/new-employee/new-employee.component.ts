@@ -185,7 +185,6 @@ export class NewEmployeeComponent implements OnInit {
     }
 
     this.rForm.reset();
-    this.app.reset();
 
   }
 

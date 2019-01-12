@@ -19,7 +19,8 @@
 
 
               <label class="formLabel">Employee assignment</label>
-              <strong class="text-muted d-block mb-2"><small>This is where employee is being assign to project. </small> </strong>
+              <strong class="text-muted d-block mb-2"><small>This is where employee is being assign to project. </small>
+              </strong>
               <br />
 
 
@@ -35,6 +36,9 @@
                     </option>
                   </select>
                 </div>
+                <small class="alertMessage" *ngIf="!rForm.controls['deptId'].valid && rForm.controls['deptId'].touched">
+                  Department field is required
+                </small>
               </div>
 
 
@@ -50,6 +54,9 @@
                     </option>
                   </select>
                 </div>
+                <small class="alertMessage" *ngIf="!rForm.controls['projId'].valid && rForm.controls['projId'].touched">
+                  Project field is required
+                </small>
               </div>
 
               <div class="form-group">
@@ -64,6 +71,9 @@
                     </option>
                   </select>
                 </div>
+                <small class="alertMessage" *ngIf="!rForm.controls['empId'].valid && rForm.controls['empId'].touched">
+                    Employee field is required
+                  </small>
               </div>
 
               <div class="form-group">
@@ -78,6 +88,9 @@
                     </option>
                   </select>
                 </div>
+                <small class="alertMessage" *ngIf="!rForm.controls['desigId'].valid && rForm.controls['desigId'].touched">
+                    Designation field is required
+                  </small>
               </div>
 
             </div>
