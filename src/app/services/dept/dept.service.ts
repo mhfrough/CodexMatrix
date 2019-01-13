@@ -11,9 +11,9 @@ export class DeptService {
 
   deptList: any[] = [];
   constructor(private http: HttpClient) { }
-  getDept() {
+  getDept(data: string) {
     this.deptList = [];
-    return this.http.get<any>(g.apiURL + '/get-departments?companyId=' + localStorage.getItem('companyID')
+    return this.http.get<any>(g.apiURL + '/get-departments?companyId=' + data
     ).subscribe(res => {
       console.log(res);
       res.data.forEach(element => {
@@ -23,6 +23,7 @@ export class DeptService {
   }
 
   createDept(data: DeptReq) {
+    this.deptList = [];
     return this.http.post<any>(g.apiURL + '/create-department', data);
   }
 

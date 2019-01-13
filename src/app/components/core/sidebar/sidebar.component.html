@@ -40,7 +40,7 @@
         </a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link " href="#" role="button">
+        <a class="nav-link "[ngClass]="{'active': currentUrl == 'profile' }" (click)="navigate('profile')" routerLink="profile">
           <i class="material-icons"></i>
           <span>Profiles</span>
         </a>
@@ -61,17 +61,17 @@
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle " data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-          aria-expanded="true">
+        <a class="nav-link dropdown-toggle" [ngClass]="{'active': currentUrl == 'task' }" data-toggle="dropdown" href="#"
+          role="button" aria-haspopup="true" aria-expanded="true">
           <i class="material-icons">toc</i>
           <span>Task</span>
         </a>
         <div class="dropdown-menu dropdown-menu-small">
-            <a class="dropdown-item " routerLink="/management/task/task">Task</a>
-            <a class="dropdown-item " routerLink="/task/my-tasks">My Tasks</a>
-            <a class="dropdown-item " routerLink="/management/task/task-overview">Overview</a>
-          <a class="dropdown-item " routerLink="/management/task/new-task">New Task</a>
-          <a class="dropdown-item " routerLink="management/assign-task" (click)="navigate('proj')">Assign Task</a>
+            <!-- <a class="dropdown-item " routerLink="/management/task/task" (click)="navigate('task')">Task</a> -->
+            <a class="dropdown-item " routerLink="/task/my-tasks" (click)="navigate('task')">My Tasks</a>
+            <!-- <a class="dropdown-item " routerLink="/management/task/task-overview" (click)="navigate('task')">Overview</a> -->
+          <a class="dropdown-item " routerLink="/management/task/new-task" (click)="navigate('task')">New Task</a>
+          <a class="dropdown-item " routerLink="management/assign-task" (click)="navigate('task')">Assign Task</a>
         </div>
       </li>
       <li class="nav-item dropdown">

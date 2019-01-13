@@ -22,7 +22,7 @@ export class TaskComponent implements OnInit {
     public task: TaskService, public emp: EmpService) { }
 
   ngOnInit() {
-    this.dept.getDept();
+    this.dept.getDept(localStorage.getItem('companyID'));
     this.delay(2000).then(any => {
       this.task.getTaskByDept(this.dept.deptList[0].id);
       this.emp.getAllEmp(localStorage.getItem('companyID'));

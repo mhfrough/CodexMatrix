@@ -31,6 +31,11 @@
                     </option>
                   </select>
                 </div>
+                <small class="form-text text-muted">department not found? <a routerLink="/structure/department">click
+                    here</a> to create new one</small>
+                <small class="alertMessage" *ngIf="!rForm.controls['deptId'].valid && rForm.controls['deptId'].touched">
+                  Select department
+                </small>
               </div>
             </div>
 
@@ -46,6 +51,11 @@
                     </option>
                   </select>
                 </div>
+                <small class="form-text text-muted">project not found? <a routerLink="/management/new-project">click
+                    here</a> to create new one</small>
+                <small class="alertMessage" *ngIf="!rForm.controls['projId'].valid && rForm.controls['projId'].touched">
+                  Select project
+                </small>
               </div>
             </div>
 
@@ -56,10 +66,10 @@
                     <label class="input-group-text" for="customSelect01">Duration </label>
                   </div>
                   <input class="form-control" placeholder="Due Date" formControlName="date" type="date">
-                  <small class="alertMessage" *ngIf="!rForm.controls['date'].valid && rForm.controls['date'].touched">
-                    Task date field is required
-                  </small>
                 </div>
+                <small class="alertMessage" *ngIf="!rForm.controls['date'].valid && rForm.controls['date'].touched">
+                  Date field is required
+                </small>
               </div>
             </div>
 
@@ -75,6 +85,9 @@
                     <option value="3">High</option>
                   </select>
                 </div>
+                <small class="alertMessage" *ngIf="!rForm.controls['priority'].valid && rForm.controls['priority'].touched">
+                  Priority date field is required
+                </small>
               </div>
             </div>
 

@@ -85,11 +85,11 @@ export class EmployeeProfileComponent implements OnInit {
 
   allTasks() {
     this.task.taskUser = [];
-    this.task.getUserTask(localStorage.getItem('id'), "d442599c-c4e7-11e8-941d-d0bf9ce16c80");
-    this.task.getUserTask(localStorage.getItem('id'), "fd1783d9-c4e7-11e8-941d-d0bf9ce16c80");
-    this.task.getUserTask(localStorage.getItem('id'), "d442919d-c4e7-11e8-941d-d0bf9ce16c80");
-    this.task.getUserTask(localStorage.getItem('id'), "f1bc127a-c4e7-11e8-941d-d0bf9ce16c80");
-    this.task.getUserTask(localStorage.getItem('id'), "f1bc2bcc-c4e7-11e8-941d-d0bf9ce16c80");
+    this.task.getUserTask(this.user$, "d442599c-c4e7-11e8-941d-d0bf9ce16c80");
+    this.task.getUserTask(this.user$, "fd1783d9-c4e7-11e8-941d-d0bf9ce16c80");
+    this.task.getUserTask(this.user$, "d442919d-c4e7-11e8-941d-d0bf9ce16c80");
+    this.task.getUserTask(this.user$, "f1bc127a-c4e7-11e8-941d-d0bf9ce16c80");
+    this.task.getUserTask(this.user$, "f1bc2bcc-c4e7-11e8-941d-d0bf9ce16c80");
   }
 
   async delay(ms: number) {

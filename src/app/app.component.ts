@@ -89,7 +89,7 @@ export class AppComponent {
   ngOnInit() {
     this.company = localStorage.getItem('companyName');
 
-    this.dept.getDept();
+    // this.dept.getDept(localStorage.getItem('companyID'));
 
 
 

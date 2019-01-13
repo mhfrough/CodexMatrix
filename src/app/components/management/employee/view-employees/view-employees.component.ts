@@ -24,7 +24,7 @@ export class ViewEmployeesComponent implements OnInit {
     public router: Router, public dept: DeptService) { }
 
   ngOnInit() {
-    this.dept.getDept();
+    this.dept.getDept(localStorage.getItem('companyID'));
     // this.emp.getAllEmp(localStorage.getItem('companyID'));
     this.delay(3000).then(any => {
       this.oneForAll();

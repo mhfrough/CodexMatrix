@@ -59,7 +59,7 @@ export class UpdateEmployeeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.dept.getDept();
+    this.dept.getDept(localStorage.getItem('companyID'));
     this.desig.getDesig(localStorage.getItem('companyID'));
     this.rol.getRole();
 

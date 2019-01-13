@@ -11,7 +11,7 @@ export class TaskOverviewComponent implements OnInit {
   constructor(public dept: DeptService) { }
 
   ngOnInit() {
-    this.dept.getDept();
+    this.dept.getDept(localStorage.getItem('companyID'));
 
     console.log(this.dept.deptList);
     

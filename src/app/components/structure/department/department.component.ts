@@ -39,7 +39,7 @@ export class DepartmentComponent implements OnInit {
     this.dept.deptList = [];
     this.getAllDept();
     this.app.reset();
-    this.dept.deptList = this.dept.deptList.sort((a, b) => 0 - (a > b ? 1 : -1));
+    // this.dept.deptList = this.dept.deptList.sort((a, b) => 0 - (a > b ? 1 : -1));
   }
 
   sortName() {
@@ -57,7 +57,7 @@ export class DepartmentComponent implements OnInit {
   // Get All Departments
   getAllDept() {
     this.isLoading = true;
-    this.dept.getDept();
+    this.dept.getDept(localStorage.getItem('companyID'));
     this.isLoading = false;
   }
 

@@ -36,7 +36,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dept.getDept();
+    this.dept.getDept(localStorage.getItem('companyID'));
   }
 
   onChange(data) {

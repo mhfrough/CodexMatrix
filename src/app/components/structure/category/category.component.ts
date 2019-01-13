@@ -40,7 +40,7 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dept.getDept();
+    this.dept.getDept(localStorage.getItem('companyID'));
     this.app.reset();
     this.delay(3000).then(any => {
 

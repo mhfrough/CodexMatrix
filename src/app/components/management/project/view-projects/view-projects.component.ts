@@ -20,7 +20,7 @@ export class ViewProjectsComponent implements OnInit {
   ngOnInit() {
     this.proj.projList = [];
     this.dept.deptList = [];
-    this.dept.getDept();
+    this.dept.getDept(localStorage.getItem('companyID'));
     this.delay(3000).then(any => {
       this.oneForAll();
     });

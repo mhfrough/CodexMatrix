@@ -29,6 +29,7 @@
                     </option>
                   </select>
                 </div>
+                <small class="form-text text-muted">department not found? <a routerLink="/structure/department">click here</a> to create new one</small>
                 <small class="alertMessage" *ngIf="!rForm.controls['deptId'].valid && rForm.controls['deptId'].touched">
                   Select department
                 </small>
@@ -48,6 +49,7 @@
                     </option>
                   </select>
                 </div>
+                <small class="form-text text-muted">category not found? <a routerLink="/structure/category">click here</a> to create new one</small>
                 <small class="alertMessage" *ngIf="!rForm.controls['catId'].valid && rForm.controls['catId'].touched">
                   Select category
                 </small>
