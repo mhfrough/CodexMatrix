@@ -4,7 +4,7 @@ export interface TaskReq {
     description: String,
     estimated_time: String,
     priority: String,
-    required_skills: String
+    required_skills: string,
     taskCreatorId: String
 }
 

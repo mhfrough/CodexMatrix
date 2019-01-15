@@ -7,7 +7,8 @@ export interface EmpReq {
     deptId: String,
     mgr: String,
     roleId: String,
-    designationId: String
+    designationId: String,
+    image,
 }
 
 export interface EmpPut {

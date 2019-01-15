@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AlertModule, TabsModule } from 'ngx-bootstrap';
 import { FilterPipe } from './app.filter';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TagInputModule } from 'ngx-chips';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth'
@@ -44,6 +46,7 @@ import { ViewProjectsComponent } from './components/management/project/view-proj
 import { ProjectDetailsComponent } from './components/management/project/project-details/project-details.component';
 import { MyTaskComponent } from './components/management/task/my-task/my-task.component';
 import { PendingComponent } from './components/management/task/pending/pending.component';
+import { ProfileEditComponent } from './components/dashboard/profile/profile-edit/profile-edit.component';
 
 export const environment = {
   apiKey: "AIzaSyADxuml0ThMfs5TrERGUcvyEypqSoXawwk",
@@ -87,7 +90,8 @@ export const environment = {
     ViewProjectsComponent,
     ProjectDetailsComponent,
     MyTaskComponent,
-    PendingComponent
+    PendingComponent,
+    ProfileEditComponent
   ],
   imports: [
     BrowserModule,
@@ -103,6 +107,8 @@ export const environment = {
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireDatabaseModule,
+    TagInputModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

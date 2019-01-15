@@ -207,6 +207,13 @@ table thead{
     padding: 0 6px;
 }
 
+.alert-box{
+    background: #e0ecf9;
+    padding: 12px;
+    border: 1px solid #c6e9ea;
+    border-left: 4px solid #8d9cb9;
+}
+
 table td{
     vertical-align: middle !important;
 }

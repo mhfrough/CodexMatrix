@@ -1,0 +1,267 @@
+<div class="main-content-container container-fluid px-4">
+  <div class="row">
+    <div class="col-lg-8 mx-auto mt-4">
+      <!-- Edit User Details Card -->
+      <div class="card card-small edit-user-details mb-4">
+        <div class="card-header p-0">
+          <div class="edit-user-details__bg">
+            <img src="/src/assets/images/avatars/up-user-details-background.jpg" alt="User Details Background Image">
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <!-- <div class="border-bottom clearfix d-flex">
+            <ul class="nav nav-tabs border-0 mt-auto mx-4 pt-2">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">General</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Projects</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Collaboration</a>
+              </li>
+            </ul>
+          </div> -->
+          <form action="#" class="py-4">
+            <div class="form-row mx-4">
+              <div class="col mb-3">
+                <h6 class="form-text m-0">General</h6>
+                <p class="form-text text-muted m-0">Setup your general profile details.</p>
+              </div>
+            </div>
+            <div class="form-row mx-4">
+              <div class="col-lg-8">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" value="Sierra">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" value="Brooks">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="userLocation">Location</label>
+                    <div class="input-group input-group-seamless">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="material-icons"></i>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" value="Remote">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="phoneNumber">Phone Number</label>
+                    <div class="input-group input-group-seamless">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="material-icons"></i>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" id="phoneNumber" value="+40 1234 567 890">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="emailAddress">Email</label>
+                    <div class="input-group input-group-seamless">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="material-icons"></i>
+                        </div>
+                      </div>
+                      <input type="email" class="form-control" id="emailAddress">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="displayEmail">Display Email Publicly</label>
+                    <select class="custom-select">
+                      <option value="1" selected="">Yes, display my email</option>
+                      <option value="2">No, do not display my email.</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <label for="userProfilePicture" class="text-center w-100 mb-4">Profile Picture</label>
+                <div class="edit-user-details__avatar m-auto">
+                  <img src="/src/assets/images/avatars/0.jpg" alt="User Avatar">
+                  <label class="edit-user-details__avatar__change">
+                    <i class="material-icons mr-1"></i>
+                    <input type="file" id="userProfilePicture" class="d-none">
+                  </label>
+                </div>
+                <button class="btn btn-sm btn-white d-table mx-auto mt-4"><i class="material-icons"></i> Upload Image</button>
+              </div>
+            </div>
+            <div class="form-row mx-4">
+              <div class="form-group col-md-6">
+                <label for="userBio">Bio</label>
+                <textarea style="min-height: 87px;" id="userBio" name="userBio" class="form-control">I'm a design focused engineer.</textarea>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="userTags">Tags</label>
+
+                <tag-input [ngModel]="['hardocoded-item']" [onlyFromAutocomplete]="true">
+                  <tag-input-dropdown [autocompleteItems]="items" [showDropdownIfEmpty]="true" [dynamicUpdate]="false">
+                  </tag-input-dropdown>
+                </tag-input>
+
+                <div class="bootstrap-tagsinput"><span class="tag label label-info">User Experience<span data-role="remove"></span></span>
+                  <span class="tag label label-info">UI Design<span data-role="remove"></span></span> <span class="tag label label-info">
+                    React JS<span data-role="remove"></span></span> <span class="tag label label-info"> HTML &amp; CSS<span
+                      data-role="remove"></span></span> <span class="tag label label-info"> JavaScript<span data-role="remove"></span></span>
+                  <span class="tag label label-info"> Bootstrap 4<span data-role="remove"></span></span> <input type="text"
+                    placeholder=""></div><input id="userTags" name="userTags" value="User Experience,UI Design, React JS, HTML &amp; CSS, JavaScript, Bootstrap 4"
+                  class="d-none" style="display: none;">
+              </div>
+            </div>
+            <hr>
+            <div class="form-row mx-4">
+              <div class="col mb-3">
+                <h6 class="form-text m-0">Social</h6>
+                <p class="form-text text-muted m-0">Setup your social profiles info.</p>
+              </div>
+            </div>
+            <div class="form-row mx-4">
+              <div class="form-group col-md-4">
+                <label for="socialFacebook">Facebook</label>
+                <div class="input-group input-group-seamless">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fab fa-facebook-f"></i>
+                    </div>
+                  </div>
+                  <input type="text" class="form-control" id="socialFacebook">
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="socialTwitter">Twitter</label>
+                <div class="input-group input-group-seamless">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fab fa-twitter"></i>
+                    </div>
+                  </div>
+                  <input type="email" class="form-control" id="socialTwitter">
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="socialGitHub">GitHub</label>
+                <div class="input-group input-group-seamless">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fab fa-github"></i>
+                    </div>
+                  </div>
+                  <input type="text" class="form-control" id="socialGitHub">
+                </div>
+              </div>
+            </div>
+            <div class="form-row mx-4">
+              <div class="form-group col-md-4">
+                <label for="socialSlack">Slack</label>
+                <div class="input-group input-group-seamless">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fab fa-slack"></i>
+                    </div>
+                  </div>
+                  <input type="email" class="form-control" id="socialSlack">
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="socialDribbble">Dribbble</label>
+                <div class="input-group input-group-seamless">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fab fa-dribbble"></i>
+                    </div>
+                  </div>
+                  <input type="email" class="form-control" id="socialDribbble">
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="socialGoogle">Google Plus+</label>
+                <div class="input-group input-group-seamless">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fab fa-google-plus-g"></i>
+                    </div>
+                  </div>
+                  <input type="email" class="form-control" id="socialGoogle">
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="form-row mx-4">
+              <div class="col mb-3">
+                <h6 class="form-text m-0">Notifications</h6>
+                <p class="form-text text-muted m-0">Setup which notifications would you like to receive.</p>
+              </div>
+            </div>
+            <div class="form-row mx-4">
+              <label for="conversationsEmailsToggle" class="col col-form-label"> Conversations <small class="form-text text-muted">
+                  Sends notification emails with updates for the conversations you are participating in or if someone
+                  mentions you. </small>
+              </label>
+              <div class="col d-flex">
+                <div class="custom-control custom-toggle ml-auto my-auto">
+                  <input type="checkbox" id="conversationsEmailsToggle" class="custom-control-input" checked="">
+                  <label class="custom-control-label" for="conversationsEmailsToggle"></label>
+                </div>
+              </div>
+            </div>
+            <div class="form-row mx-4">
+              <label for="newProjectsEmailsToggle" class="col col-form-label"> New Projects <small class="form-text text-muted">
+                  Sends notification emails when you are invited to a new project. </small>
+              </label>
+              <div class="col d-flex">
+                <div class="custom-control custom-toggle ml-auto my-auto">
+                  <input type="checkbox" id="newProjectsEmailsToggle" class="custom-control-input">
+                  <label class="custom-control-label" for="newProjectsEmailsToggle"></label>
+                </div>
+              </div>
+            </div>
+            <div class="form-row mx-4">
+              <label for="vulnerabilitiesEmailsToggle" class="col col-form-label"> Vulnerability Alerts <small class="form-text text-muted">
+                  Sends notification emails when everything goes down and there's no hope left whatsoever. </small>
+              </label>
+              <div class="col d-flex">
+                <div class="custom-control custom-toggle ml-auto my-auto">
+                  <input type="checkbox" id="vulnerabilitiesEmailsToggle" class="custom-control-input" checked="">
+                  <label class="custom-control-label" for="vulnerabilitiesEmailsToggle"></label>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="form-row mx-4">
+              <div class="col mb-3">
+                <h6 class="form-text m-0">Change Password</h6>
+                <p class="form-text text-muted m-0">Change your current password.</p>
+              </div>
+            </div>
+            <div class="form-row mx-4">
+              <div class="form-group col-md-4">
+                <label for="firstName">Old Password</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Old Password">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="lastName">New Password</label>
+                <input type="text" class="form-control" id="lastName" placeholder="New Password">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="emailAddress">Repeat New Password</label>
+                <input type="email" class="form-control" id="emailAddress" placeholder="Repeat New Password">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer border-top">
+          <a href="#" class="btn btn-sm btn-accent ml-auto d-table mr-3">Save Changes</a>
+        </div>
+      </div>
+      <!-- End Edit User Details Card -->
+    </div>
+  </div>
+</div>

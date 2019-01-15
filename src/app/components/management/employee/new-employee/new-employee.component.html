@@ -47,8 +47,6 @@
 
             </div>
 
-
-
             <div class="col-lg-12">
               <hr />
               <label class="formLabel">Employee assignment</label>
@@ -74,7 +72,8 @@
                     </option>
                   </select>
                 </div>
-                <small class="form-text text-muted">to create new department <a routerLink="/structure/department">click here</a> </small>
+                <small class="form-text text-muted">to create new department <a routerLink="/structure/department">click
+                    here</a> </small>
                 <small class="alertMessage" *ngIf="!rForm.controls['empDept'].valid && rForm.controls['empDept'].touched">
                   Select department
                 </small>
@@ -96,7 +95,8 @@
                     </option>
                   </select>
                 </div>
-                <small class="form-text text-muted">to create new designation <a routerLink="/structure/designation">click here</a> </small>
+                <small class="form-text text-muted">to create new designation <a routerLink="/structure/designation">click
+                    here</a> </small>
                 <small class="alertMessage" *ngIf="!rForm.controls['empDesig'].valid && rForm.controls['empDesig'].touched">
                   Select designation
                 </small>
@@ -142,6 +142,61 @@
                 <small class="alertMessage" *ngIf="!rForm.controls['empMgr'].valid && rForm.controls['empMgr'].touched">
                   Select Mger
                 </small>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <hr />
+              <div class="row">
+                <div class="col-lg-4">
+
+                  <div class="form-group">
+                    <label class="formLabel">Employee profile picture</label><br />
+                    <label for="file-upload" class="custom-file-upload" [ngStyle]="{ 'background-image': 'url(' + imageSrc + ')'}">
+                      <!-- <img id="blah" [src]="imageSrc || 'http://placehold.it/180'" alt="your image" /> -->
+                      <div *ngIf="imageSrc == '/src/assets/images/empty.png'">
+                        <h2><i class="material-icons">
+                            add_a_photo
+                          </i>
+                        </h2>
+                        <p class="dat">Upload Image</p>
+                      </div>
+                      <div class="white" *ngIf="imageSrc != '/src/assets/images/empty.png'">
+                        <h2><i class="material-icons white">
+                            add_a_photo
+                          </i>
+                        </h2>
+                        <p class="dat">Upload Image</p>
+                      </div>
+                    </label>
+                    <input class="form-control" id="file-upload" type="file" (change)="readURL($event)" />
+                  </div>
+
+                </div>
+                <div class="col-lg-8">
+
+                  <br />
+
+                  <strong class="text-muted d-block mb-2"><small>Click on the box to upload employee profile picture.
+                      Please use an image no larger than 360 x 360 pixels.</small>
+                  </strong>
+
+                  <div class="alert-box" role="alert">
+
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <h2><i class="material-icons">
+                            info
+                          </i></h2>
+                      </div>
+                      <div class="col-lg-10">
+                        <span><strong class="dat">Optional</strong> field.<br />Employee can also change profile
+                          picture later on.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </div>
 

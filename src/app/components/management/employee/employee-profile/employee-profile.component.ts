@@ -24,6 +24,7 @@ export class EmployeeProfileComponent implements OnInit {
   role: string = '';
   created_at: string = '';
   updated_at: string = '';
+  image: File;
 
   assignedBy: string = '';
 
@@ -54,6 +55,7 @@ export class EmployeeProfileComponent implements OnInit {
       this.role = res.data.roleName;
       this.created_at = res.data.created_at;
       this.updated_at = res.data.updated_at;
+      this.image = res.data.image; 
     });
 
     this.assignedBy = localStorage.getItem('id');

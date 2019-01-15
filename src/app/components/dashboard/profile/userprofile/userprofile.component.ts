@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeptService } from 'src/app/services/dept/dept.service';
 import { EmpService } from 'src/app/services/emp/emp.service';
 import { TaskService } from 'src/app/services/task/task.service';
@@ -35,7 +35,7 @@ export class UserprofileComponent implements OnInit {
 
 
   constructor(private route: ActivatedRoute, private task: TaskService,
-    private dept: DeptService, private emp: EmpService) {
+    private dept: DeptService, private emp: EmpService, public router: Router) {
   }
 
   ngOnInit() {
@@ -78,6 +78,10 @@ export class UserprofileComponent implements OnInit {
       console.log(this.progress);
     });
   }
+
+redirectToEditProfile(){
+  this.router.navigate(['/profile/edit/' + this.user$]);
+}
 
   allTasks() {
     this.task.taskUser = [];

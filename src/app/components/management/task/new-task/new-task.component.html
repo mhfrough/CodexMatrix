@@ -122,15 +122,26 @@
                 </small>
               </div>
 
+
+
               <div class="form-group">
-                <label class="formLabel">Select multiple skill-set</label>
-                <select class="form-control" name="selectedSkills" multiple="multiple" [(ngModel)]="selectedSkills"
+                <label class="formLabel">Select skill(s)</label>
+                <!--  <select class="form-control" name="selectedSkills" multiple="multiple" [(ngModel)]="selectedSkills"
                   formControlName="skills">
                   <option *ngFor="let item of skil.skilList" (click)="clickedOption()" [ngValue]="item.id">
                     {{item.name}}
                   </option>
-                </select>
+                </select> -->
 
+
+                <div class="bootstrap-tagsinput">
+                  <tag-input (onAdd)="onAdd($event)" (onRemove)="onRemove($event)" [ngModel]="item"
+                    [onlyFromAutocomplete]="true" [ngModelOptions]="{standalone: true}">
+                    <tag-input-dropdown [autocompleteItems]="items" [identifyBy]="'id'" [displayBy]="'name'"
+                      [showDropdownIfEmpty]="true" [dynamicUpdate]="false">
+                    </tag-input-dropdown>
+                  </tag-input>
+                </div>
                 <!-- <ng-select [items]="people" [multiple]="true" bindLabel="name" groupBy="gender" [selectableGroup]="true"
                       [closeOnSelect]="false" bindValue="id" [(ngModel)]="selectedPeople">
                       <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">

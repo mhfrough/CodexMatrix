@@ -29,8 +29,9 @@ export class NewEmployeeComponent implements OnInit {
   empDept: String = "";
   empMgr: String = "";
   isUpdate: boolean = false;
-
+  imageSrc: string = "/src/assets/images/empty.png";
   fieldsDisabled: boolean = false;
+  userImage: File;
 
   alerts: any[] = [];
   isLoading: boolean = false;
@@ -118,6 +119,8 @@ export class NewEmployeeComponent implements OnInit {
   onSubmit(post) {
     this.isLoading = true;
 
+     let formData = new FormData();
+
     if (!this.isUpdate) {
       this.empReq = {
         name: post.empName,
@@ -129,7 +132,10 @@ export class NewEmployeeComponent implements OnInit {
         mgr: post.empMgr,
         roleId: post.empRole,
         designationId: post.empDesig,
+        image: formData.append('myfile', this.selectedFile)
       }
+
+      console.log(this.empReq);
 
       this.emp.createEmp(this.empReq).subscribe(res => {
         console.log(res)
@@ -188,7 +194,21 @@ export class NewEmployeeComponent implements OnInit {
 
   }
 
-  
+  selectedFile: File;
+
+  readURL(event: any) {
+    // this.userImage = event.target.files[0];
+    // // this.imageSelected = this.userFile.name;
+    // if (event.target.files && event.target.files[0]) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e: any) => {
+    //     this.imageSrc = e.target.result;
+    //   };
+    //   reader.readAsDataURL(event.target.files[0]);
+    // }
+    this.selectedFile = event.target.files[0]
+    
+  }
 
   onUpdate(id: String, name: String, email: String, password: String
     , deptId: String, mgr: String) {
