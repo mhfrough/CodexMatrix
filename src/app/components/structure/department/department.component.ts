@@ -3,7 +3,6 @@ import { AppComponent } from 'src/app/app.component';
 import { DeptReq, DeptPut, DeptDel } from 'src/app/interfaces/dept';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DeptService } from 'src/app/services/dept/dept.service';
-import { cloneWithOffset } from 'ngx-bootstrap/chronos/units/offset';
 
 @Component({
   selector: 'app-department',
@@ -63,7 +62,7 @@ export class DepartmentComponent implements OnInit {
 
   // Add New Department
   onSubmit(post) {
-    this.isLoading = true;
+    // this.isLoading = true;
 
     if (!this.isUpdate) {
       this.deptReq = {
@@ -73,7 +72,12 @@ export class DepartmentComponent implements OnInit {
 
       this.dept.createDept(this.deptReq).subscribe(res => {
         if (res.status == 1) {
-          this.isLoading = false;
+          // this.isLoading = false;
+
+
+          // this.dept.deptList.push()
+          
+          
           console.log(res);
           // Department Creation Successful
           this.app.alerts.push({
@@ -147,6 +151,11 @@ export class DepartmentComponent implements OnInit {
     }
 
     this.dept.deleteDept(this.deptDel).subscribe(res => {
+
+
+      // if(res.status == 1) this.dept.deptList.slice()
+      
+      
       // Department Deleted
       this.isLoading = false;
       this.app.alerts.push({

@@ -207,6 +207,30 @@ table thead{
     padding: 0 6px;
 }
 
+.pointer {cursor: pointer;}
+.btn-outline-Available {
+    background: #fff;
+    border-color: #007bff;
+    color: #007bff;
+  }
+
+  .btn-outline-Working {
+    background: #fff;
+    border-color: #17c671;
+    color: #17c671;
+  }
+
+  .btn-outline-Busy {
+    background: #fff;
+    border-color: #ffb400;
+    color: #ffb400;
+  }
+
+  .btn-outline-Loading {
+    background: #fff;
+    border-color: #000;
+    color: #000;
+  }
 .alert-box{
     background: #e0ecf9;
     padding: 12px;

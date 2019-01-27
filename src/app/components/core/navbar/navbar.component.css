@@ -1,0 +1,6 @@
+.ui{
+    padding: 0 10px;
+}
+.ui:hover{
+    text-decoration: underline !important;
+}

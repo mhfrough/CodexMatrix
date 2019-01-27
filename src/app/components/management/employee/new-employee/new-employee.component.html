@@ -146,6 +146,21 @@
             </div>
 
             <div class="col-lg-12">
+              <div class="form-group">
+                <label class="formLabel">Select skill(s)</label>
+
+                <div class="bootstrap-tagsinput">
+                  <tag-input (onAdd)="onAdd($event)" (onRemove)="onRemove($event)" [ngModel]="item"
+                    [onlyFromAutocomplete]="true" [ngModelOptions]="{standalone: true}">
+                    <tag-input-dropdown [autocompleteItems]="items" [identifyBy]="'id'" [displayBy]="'name'"
+                      [showDropdownIfEmpty]="true" [dynamicUpdate]="false">
+                    </tag-input-dropdown>
+                  </tag-input>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
               <hr />
               <div class="row">
                 <div class="col-lg-4">

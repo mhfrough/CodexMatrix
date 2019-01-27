@@ -7,6 +7,8 @@ import { ProjService } from 'src/app/services/proj/proj.service';
 import { AppComponent } from 'src/app/app.component';
 import { DeptService } from 'src/app/services/dept/dept.service';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { FirebaseService } from 'src/app/services/fbase/firebase.service';
+import { NotificationMessage } from 'src/app/interfaces/firebase';
 
 @Component({
   selector: 'app-assign-task',
@@ -22,9 +24,15 @@ export class AssignTaskComponent implements OnInit {
   dismissible = true;
   assigTaskReq: AssigTaskReq;
 
+  fbase: NotificationMessage;
+
+  taskName;
+
+
   constructor(public task: TaskService, public emp: EmpService,
     public fb: FormBuilder, public proj: ProjService, public dept: DeptService,
-    public app: AppComponent, private db: AngularFireDatabase) {
+    public app: AppComponent, private db: AngularFireDatabase,
+    public firebase: FirebaseService) {
     this.rForm = fb.group({
       'deptId': [null, Validators.required],
       'projId': [null, Validators.required],
@@ -51,6 +59,12 @@ export class AssignTaskComponent implements OnInit {
   onSubmit(post) {
     console.log(post.givenBy);
 
+    for (let item of this.task.taskList) {
+      if (item.id == post.taskId) {
+        this.taskName = item.name;
+      }
+    }
+
     this.isLoading = true;
     this.assigTaskReq = {
       taskId: post.taskId,
@@ -61,31 +75,42 @@ export class AssignTaskComponent implements OnInit {
 
     console.log(this.assigTaskReq);
 
-    this.task.assignTask(this.assigTaskReq).subscribe(res => {
-      if (res.status == 1) {
-        console.log(res);
+    this.fbase = {
+      id: post.taskId,
+      title: "Task Assignment",
+      message: "You have been assigned to " + this.taskName + " by " + localStorage.getItem('name'),
+      from: localStorage.getItem('id'),
+      status: "un-read",
+      icon: "list_alt"
+    }
 
-        // this.db.database.ref('users/' + localStorage.getItem('id')).
-        // this.db.object('users/'+ localStorage.getItem('id')).valueChanges()
+    this.firebase.notification(post.empId, this.fbase).then(() => console.log("Notify"));
 
-        this.isLoading = false;
-        this.app.alerts.push({
-          type: 'success',
-          icon: 'done',
-          msg: `${res.message}`,
-          timeout: 5000
-        });
-      } else {
-        console.log(false)
-        this.isLoading = false;
-        this.app.alerts.push({
-          type: 'warning',
-          icon: 'warning',
-          msg: `${res.message}`,
-          timeout: 5000
-        });
-      }
-    })
+    // this.task.assignTask(this.assigTaskReq).subscribe(res => {
+    //   if (res.status == 1) {
+    //     console.log(res);
+
+    //     // this.db.database.ref('users/' + localStorage.getItem('id')).
+    //     // this.db.object('users/'+ localStorage.getItem('id')).valueChanges()
+
+    //     this.isLoading = false;
+    //     this.app.alerts.push({
+    //       type: 'success',
+    //       icon: 'done',
+    //       msg: `${res.message}`,
+    //       timeout: 5000
+    //     });
+    //   } else {
+    //     console.log(false)
+    //     this.isLoading = false;
+    //     this.app.alerts.push({
+    //       type: 'warning',
+    //       icon: 'warning',
+    //       msg: `${res.message}`,
+    //       timeout: 5000
+    //     });
+    //   }
+    // })
     this.rForm.reset();
   }
 

@@ -1,0 +1,32 @@
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-lg-10 offset-lg-1 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">Messages</span>
+      <h3 class="page-title">memo</h3>
+    </div>
+  </div>
+  <!-- End Page Header -->
+
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1">
+
+      <div class="card">
+        <div class="card-body">
+          <div class="col-lg-10 offset-lg-1">
+            <br /><br />
+            <span><strong class="dat">To: </strong>{{to}}</span><br />
+            <span><strong class="dat">From: </strong>{{data.author}}</span><br />
+            <span><strong class="dat">Date: </strong>{{data.time}}</span><br />
+            <span><strong class="dat">Subject: </strong>{{data.title}}</span>
+            <hr />
+            <p>{{data.body}}</p>
+            <br /><br />
+            <small><strong class="dat">Viewed by: </strong>{{data.readers}}</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

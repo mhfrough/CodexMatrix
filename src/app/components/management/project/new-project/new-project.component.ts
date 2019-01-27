@@ -7,6 +7,7 @@ import { CatService } from 'src/app/services/cat/cat.service';
 import { DesigService } from 'src/app/services/desig/desig.service';
 import { DeptService } from 'src/app/services/dept/dept.service';
 import { AppComponent } from 'src/app/app.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-project',
@@ -29,7 +30,7 @@ export class NewProjectComponent implements OnInit {
   constructor(public proj: ProjService, public cat: CatService,
     public dept: DeptService, public emp: EmpService,
     public desig: DesigService, public fb: FormBuilder,
-    public app: AppComponent) {
+    public app: AppComponent, public router: Router) {
     this.rForm = fb.group({
       'projName': [null, Validators.required],
       'catId': [null, Validators.required],
@@ -39,6 +40,7 @@ export class NewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.app.isSoftwareHouse) this.router.navigate(['']);
     this.dept.getDept(localStorage.getItem('companyID'));
     this.desig.getDesig(localStorage.getItem('companyID'));
     console.log(this.dept.deptList);
@@ -86,7 +88,7 @@ export class NewProjectComponent implements OnInit {
 
   // Assign Employee
 
-  handleDesig(){
-    
+  handleDesig() {
+
   }
 }

@@ -10,10 +10,27 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class NavbarComponent implements OnInit {
 
+  name = 'employee name';
+  notificationMessages = [];
+  
   constructor(public nav: NavigationService, public _auth: AuthService,
-    public app: AppComponent) { }
+    public app: AppComponent) {
+  }
 
   ngOnInit() {
+    this.name = localStorage.getItem('name');
+
+    this.delay(3000).then(() => {
+      this.notificationMessages = this.app.notificaitonMessages;
+    })
+  }
+
+  onRead() {
+    console.log(1)
+  }
+
+  async delay(ms: number) {
+    await new Promise(resolve => setTimeout(() => resolve(), ms));
   }
 
   logOut() {

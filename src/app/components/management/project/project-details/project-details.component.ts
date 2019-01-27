@@ -38,7 +38,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    if(!this.app.isSoftwareHouse) this.router.navigate(['']);
     this.task.getTask(this.project$);
     this.proj.getProjMembers(this.project$);
     this.proj.getProjDetails(this.project$).subscribe(res => {

@@ -18,6 +18,7 @@ export class ViewProjectsComponent implements OnInit {
     public emp: EmpService, public router: Router) { }
 
   ngOnInit() {
+    if(!this.app.isSoftwareHouse) this.router.navigate(['']);
     this.proj.projList = [];
     this.dept.deptList = [];
     this.dept.getDept(localStorage.getItem('companyID'));

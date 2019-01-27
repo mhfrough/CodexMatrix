@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CatService } from 'src/app/services/cat/cat.service';
 import { DeptService } from 'src/app/services/dept/dept.service';
 import { AppComponent } from 'src/app/app.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category',
@@ -27,7 +28,7 @@ export class CategoryComponent implements OnInit {
   public searchString: string;
 
   constructor(public cat: CatService, public app: AppComponent,
-    public dept: DeptService, public fb: FormBuilder) {
+    public dept: DeptService, public fb: FormBuilder, public router: Router) {
     this.rForm = fb.group({
       'catName': [null, Validators.compose([
         Validators.required,
@@ -40,6 +41,7 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.app.isSoftwareHouse) this.router.navigate(['']);
     this.dept.getDept(localStorage.getItem('companyID'));
     this.app.reset();
     this.delay(3000).then(any => {

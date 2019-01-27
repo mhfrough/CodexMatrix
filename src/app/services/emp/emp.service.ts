@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as g from 'src/app/app.globals';
 import { EmpReq, EmpPut, EmpDel } from 'src/app/interfaces/emp';
 
@@ -10,7 +10,7 @@ import { EmpReq, EmpPut, EmpDel } from 'src/app/interfaces/emp';
 export class EmpService {
 
   empList: any[] = [];
-  empListA: String[] = [];
+  empListA: any[] = [];
   allEmpList: any[] = [];
   constructor(private http: HttpClient) { }
 
@@ -51,8 +51,14 @@ export class EmpService {
   }
 
   createEmp(data: EmpReq) {
+    const headers = new HttpHeaders();
+    // headers.append('Content-Type', 'multipart/form-data');
+    // headers.append('Accept', 'application/json');
     return this.http.post<any>(g.apiURL + '/add-empl-to-dept', data);
   }
+  // {
+  //   headers: new HttpHeaders({ "Accept": "application/json" })
+  // }
 
   updateEmp(data: EmpPut) {
     return this.http.post<any>(g.apiURL + '/update-emp-in-dept', data);

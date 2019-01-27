@@ -3,11 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AlertModule, TabsModule } from 'ngx-bootstrap';
+import { AlertModule, TabsModule, ModalModule } from 'ngx-bootstrap';
 import { FilterPipe } from './app.filter';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+import { PushNotificationService } from 'ngx-push-notifications';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth'
@@ -47,6 +48,8 @@ import { ProjectDetailsComponent } from './components/management/project/project
 import { MyTaskComponent } from './components/management/task/my-task/my-task.component';
 import { PendingComponent } from './components/management/task/pending/pending.component';
 import { ProfileEditComponent } from './components/dashboard/profile/profile-edit/profile-edit.component';
+import { MemoDetailsComponent } from './components/dashboard/memo/memo-details/memo-details.component';
+import { MemoComponent } from './components/dashboard/memo/memo/memo.component';
 
 export const environment = {
   apiKey: "AIzaSyADxuml0ThMfs5TrERGUcvyEypqSoXawwk",
@@ -91,7 +94,9 @@ export const environment = {
     ProjectDetailsComponent,
     MyTaskComponent,
     PendingComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    MemoComponent,
+    MemoDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -109,8 +114,9 @@ export const environment = {
     AngularFireDatabaseModule,
     TagInputModule,
     BrowserAnimationsModule,
+    ModalModule.forRoot(),
   ],
-  providers: [],
+  providers: [PushNotificationService],
   bootstrap: [AppComponent],
   exports: [
     FilterPipe,

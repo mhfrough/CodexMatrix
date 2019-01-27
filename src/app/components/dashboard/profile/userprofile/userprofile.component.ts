@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DeptService } from 'src/app/services/dept/dept.service';
 import { EmpService } from 'src/app/services/emp/emp.service';
 import { TaskService } from 'src/app/services/task/task.service';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-userprofile',
@@ -30,12 +31,18 @@ export class UserprofileComponent implements OnInit {
   approveTotal: number = 0;
   totalTasks: number = 0;
 
+  image: string = 'src/assets/images/user.png';
+
   workload: number = 0;
   progress: number = 0;
 
+  skills:any = ['loading skills...'];
+
+  empStatus:any = 'Loading'
 
   constructor(private route: ActivatedRoute, private task: TaskService,
-    private dept: DeptService, private emp: EmpService, public router: Router) {
+    private dept: DeptService, private emp: EmpService, public router: Router,
+    private db: AngularFireDatabase) {
   }
 
   ngOnInit() {
@@ -50,7 +57,14 @@ export class UserprofileComponent implements OnInit {
       this.role = res.data.roleName;
       this.created_at = res.data.created_at;
       this.updated_at = res.data.updated_at;
+      this.skills = res.userSkills;
     });
+
+    this.db.object('users/' + this.user$ + '/status')
+      .valueChanges().subscribe(action => {
+        this.empStatus = action
+        console.log(action)
+      })
 
     this.assignedBy = localStorage.getItem('id');
     this.allTasks();
@@ -79,9 +93,13 @@ export class UserprofileComponent implements OnInit {
     });
   }
 
-redirectToEditProfile(){
-  this.router.navigate(['/profile/edit/' + this.user$]);
-}
+  redirectToEditProfile() {
+    this.router.navigate(['/profile/edit/' + this.user$]);
+  }
+
+  changeStatus(data) {
+    this.db.database.ref('users/' + this.user$).update({ status: data })
+  }
 
   allTasks() {
     this.task.taskUser = [];

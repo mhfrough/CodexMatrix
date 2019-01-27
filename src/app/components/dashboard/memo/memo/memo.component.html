@@ -1,0 +1,71 @@
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-lg-12 offset-lg-0 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">Message <button type="button" class="mb-2 btn btn-sm btn-white mr-1 pull-right"
+          (click)="openModal(template)"><i class="material-icons">
+            border_color
+          </i> Create Note</button>
+      </span>
+      <h3 class="page-title">Memo List</h3>
+    </div>
+  </div>
+  <!-- End Page Header -->
+
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1">
+
+      <div class="list-group">
+        <a *ngFor="let item of notes" class="list-group-item list-group-item-action flex-column align-items-start" (click)="read(item)">
+          <p class="mb-1"><strong>{{item.title}} </strong> {{item.body.substring(0, 100)}}</p>
+          <small class="text-muted">{{item.author}}</small><small class="text-muted pull-right">{{item.time}}</small>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Create Note</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form role="form" method="POST" (ngSubmit)="note(title.value, body.value)">
+
+      <div class="form-group">
+        <div class="col-md-12">
+          <input type="email" class="form-control" placeholder="Subject" [ngModelOptions]="{standalone: true}" [(ngModel)]="titleValue" value="" #title>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-12">
+          <textarea class="form-control" id="" cols="30" rows="10" [ngModelOptions]="{standalone: true}" [(ngModel)]="bodyValue" value="" #body></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-12">
+          <button type="submit" class="form-control" [disabled]="!titleValue || !bodyValue">Post Note</button>
+          <a class="btn btn-link pull-right href" (click)="selectEmployee()">Select specific employee?</a>
+          <select class="form-control select-class" *ngIf="selectTrue" (change)="selectedEmployee($event.target.value)">
+            <option value="0"></option>
+            <option *ngFor="let item of emp.empList" value="{{item.id}}">
+              {{item.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="reset" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+  </div>
+</ng-template>

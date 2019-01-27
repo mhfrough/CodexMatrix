@@ -12,13 +12,24 @@
       <div class="card card-small mb-4 pt-3">
         <div class="card-header border-bottom text-center">
           <div class="mb-3 mx-auto">
-            <img class="rounded-circle" src="/src/images/avatars/3.jpg" alt="User Avatar" width="110">
+            <img class="rounded-circle img-style" src="{{image}}" alt="User Avatar" width="110">
           </div>
           <h4 class="mb-0">{{name}}</h4>
           <span class="text-muted d-block mb-2">{{user$.designation}}</span>
-          <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2" (click)="redirectToEditProfile()"><i class="material-icons">
+          <div class="btn-group" role="group">
+            <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-{{empStatus}} mr-2 dropdown-toggle"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{empStatus}}</button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+              <a class="dropdown-item" (click)="changeStatus('Available')">Available</a>
+              <a class="dropdown-item" (click)="changeStatus('Working')">Working</a>
+              <a class="dropdown-item" (click)="changeStatus('Busy')">Busy</a>
+            </div>
+          </div>
+          <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2" (click)="redirectToEditProfile()"><i
+              class="material-icons">
               edit
-              </i> Edit Profile</button>
+            </i> Edit Profile</button>
+
         </div>
         <div class="user-details__user-data border-bottom p-4">
           <div class="row mb-3">
@@ -55,12 +66,8 @@
           </div>
         </div>
         <div class="user-details__tags p-4">
-          <span class="badge badge-pill badge-light text-light text-uppercase mb-2 border">User Experience</span>
-          <span class="badge badge-pill badge-light text-light text-uppercase mb-2 border">UI Design</span>
-          <span class="badge badge-pill badge-light text-light text-uppercase mb-2 border">React JS</span>
-          <span class="badge badge-pill badge-light text-light text-uppercase mb-2 border">HTML &amp; CSS</span>
-          <span class="badge badge-pill badge-light text-light text-uppercase mb-2 border">JavaScript</span>
-          <span class="badge badge-pill badge-light text-light text-uppercase mb-2 border">Bootstrap 4</span>
+          <span *ngFor="let item of skills" class="badge badge-pill badge-light text-light text-uppercase mb-2 border">
+            {{item.name}}</span>
         </div>
       </div>
     </div>
@@ -110,8 +117,8 @@
               <div class="progress-wrapper">
                 <span class="progress-label">Workload</span>
                 <div class="progress progress-sm">
-                  <div class="progress-bar progress-bar-striped" role="progressbar" attr.aria-valuenow="{{workload}}" aria-valuemin="0"
-                    aria-valuemax="100" [style.width.%]="workload">
+                  <div class="progress-bar progress-bar-striped" role="progressbar" attr.aria-valuenow="{{workload}}"
+                    aria-valuemin="0" aria-valuemax="100" [style.width.%]="workload">
                     <span class="progress-value">{{workload}}%</span>
                   </div>
                 </div>
@@ -154,9 +161,9 @@
                       <strong *ngIf="item.givenById == assignedBy" class="clip"><i class="material-icons">info</i>
                         You've
                         Assigned This Task to
-                        {{item.givenToName}}</strong><br/>
+                        {{item.givenToName}}</strong><br />
                       <b class="dat">{{item.taskName}}</b><br />
-                      <small>{{item.description}}</small><br/>
+                      <small>{{item.description}}</small><br />
                       <small><strong class='dat'>Assigned By: </strong>{{item.givenByName}}</small>
                     </td>
                     <td class="lo-stats__status">

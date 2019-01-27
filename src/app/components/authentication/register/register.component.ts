@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { AppComponent } from 'src/app/app.component';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
-// import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireDatabase } from 'angularfire2/database';
 
 function passwordConfirming(c: AbstractControl): any {
@@ -57,9 +56,7 @@ export class RegisterComponent implements OnInit {
         Validators.maxLength(32)
       ])],
       'domain': [null, Validators.compose([
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(32)
+        Validators.required
       ])],
       'password': [null, Validators.compose([
         Validators.required,
@@ -106,7 +103,7 @@ export class RegisterComponent implements OnInit {
     this.registerReq = {
       name: post.name,
       email: post.email,
-      domain: post.domain,
+      domainId: post.domain,
       password: post.password,
       deviceType: 'none',
       deviceToken: 'none'
@@ -116,19 +113,28 @@ export class RegisterComponent implements OnInit {
       if (res.status == 1) {
         console.log(res);
 
-        this.register(res, post.password);
+        // this.register(res, post.password);
         // this.isLoading = false;
         this.authMsg = `${res.data.name} is registered`;
 
         localStorage.setItem('loginStatus', "true");
         localStorage.setItem('id', res.data.id);
         localStorage.setItem('email', res.data.email);
+        localStorage.setItem('email', res.data.email);
+        localStorage.setItem('domain', res.data.domainId);
         localStorage.setItem('role', res.data.role);
         localStorage.setItem('companyID', res.data.companyId);
         localStorage.setItem('companyName', res.data.name);
-        this.delay(1000).then(any => {
-          this.app.company = res.data.name;
-          this.router.navigate(['']);
+        if (res.data.domainId == "eca5294d-1e62-11e9-9035-ac1f6b251886")
+          localStorage.setItem('domain', "uni");
+        else
+          localStorage.setItem('domain', "sof");
+
+        this.register(res, post.password).then(() => {
+          this.delay(1000).then(any => {
+            this.app.company = res.data.name;
+            this.router.navigate(['']);
+          });
         });
       } else {
         this.isLoading = false;
@@ -143,18 +149,19 @@ export class RegisterComponent implements OnInit {
   }
 
   async register(res, password) {
-
+    this.authMsg = "Stablishing Connection"
     try {
       var r = await this.fAuth.auth.createUserWithEmailAndPassword(
         res.data.email,
         password
       );
       if (r) {
+        this.authMsg = "Setting-Up Profile"
         this.fireAuth = {
           id: res.data.id
         }
         console.log(r);
-        this.db.database.ref('users/'+res.data.id).set({
+        this.db.database.ref('users/' + res.data.id).set({
           name: res.data.name,
           email: res.data.email
         }).then(data => {

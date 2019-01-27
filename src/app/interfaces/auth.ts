@@ -1,3 +1,5 @@
+import { TaskComponent } from "../components/management/task/task/task.component";
+
 // Login Service and Component
 export interface LoginReq {
     email: String,
@@ -10,12 +12,12 @@ export interface LoginReq {
 export interface RegisterReq {
     name: String,
     email: String,
-    domain: String,
+    domainId: String,
     password: String,
     deviceType: String,
     deviceToken: String
 }
 
-export interface FireAuth{
-  id: string
+export interface FireAuth {
+    id: string
 }

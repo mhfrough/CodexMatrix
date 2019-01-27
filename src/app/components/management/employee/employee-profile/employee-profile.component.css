@@ -44,3 +44,9 @@
   .text-3::after{
     content: 'High';
   }
+
+  .img-style {
+    height: 140px;
+    width: 140px;
+    border: 1px solid #ccc;
+  }

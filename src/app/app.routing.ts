@@ -25,11 +25,15 @@ import { ProjectDetailsComponent } from './components/management/project/project
 import { MyTaskComponent } from './components/management/task/my-task/my-task.component';
 import { UserprofileComponent } from './components/dashboard/profile/userprofile/userprofile.component';
 import { ProfileEditComponent } from './components/dashboard/profile/profile-edit/profile-edit.component';
+import { MemoComponent } from './components/dashboard/memo/memo/memo.component';
+import { MemoDetailsComponent } from './components/dashboard/memo/memo-details/memo-details.component';
 
 const routes: Routes = [
   // Dashboard Section
   { path: '', component: AnalyticsComponent, canActivate: [AuthGuard] },
-  { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
+  { path: 'messages/chat', component: MessagesComponent, canActivate: [AuthGuard] },
+  { path: 'messages/memo', component: MemoComponent, canActivate: [AuthGuard] },
+  { path: 'messages/memo-details', component: MemoDetailsComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: UserprofileComponent, canActivate: [AuthGuard] },
   { path: 'profile/edit/:id', component: ProfileEditComponent, canActivate: [AuthGuard] },
   // Authentication Section

@@ -4,6 +4,8 @@ import { TaskService } from 'src/app/services/task/task.service';
 import { DeptService } from 'src/app/services/dept/dept.service';
 import { EmpService } from 'src/app/services/emp/emp.service';
 import { ViewEmployeesComponent } from '../view-employees/view-employees.component';
+import { EmpStatus } from 'src/app/interfaces/emp';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-employee-profile',
@@ -24,7 +26,7 @@ export class EmployeeProfileComponent implements OnInit {
   role: string = '';
   created_at: string = '';
   updated_at: string = '';
-  image: File;
+  image: string = 'src/assets/images/user.png';
 
   assignedBy: string = '';
 
@@ -37,9 +39,12 @@ export class EmployeeProfileComponent implements OnInit {
   workload: number = 0;
   progress: number = 0;
 
+  skills:any = ['loading skills...'];
+
+  empStatus: any = 'Loading'
 
   constructor(private route: ActivatedRoute, private task: TaskService,
-    private dept: DeptService, private emp: EmpService) {
+    private dept: DeptService, private emp: EmpService, private db: AngularFireDatabase) {
     this.route.params.subscribe(params => this.user$ = params.id);
   }
 
@@ -55,8 +60,20 @@ export class EmployeeProfileComponent implements OnInit {
       this.role = res.data.roleName;
       this.created_at = res.data.created_at;
       this.updated_at = res.data.updated_at;
-      this.image = res.data.image; 
+      // this.image = res.data.image;
+      this.skills = res.userSkills;
+
+
+      console.log(this.skills);
     });
+
+    this.db.object('users/' + this.user$ + '/status')
+      .valueChanges().subscribe(action => {
+        this.empStatus = action
+        console.log(action)
+      })
+
+
 
     this.assignedBy = localStorage.getItem('id');
     this.allTasks();
@@ -83,6 +100,10 @@ export class EmployeeProfileComponent implements OnInit {
       console.log(this.workload);
       console.log(this.progress);
     });
+  }
+
+  changeStatus(data) {
+    this.db.database.ref('users/' + this.user$).update({ status: data })
   }
 
   allTasks() {

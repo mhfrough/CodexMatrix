@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavbarComponent } from './components/core/navbar/navbar.component';
 import { NavigationService } from './services/core/navigation/navigation.service';
 import { DeptService } from './services/dept/dept.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs';
-import { TabHeadingDirective } from 'ngx-bootstrap';
-
+import { map } from 'rxjs/operators';
+import { Key } from 'protractor';
+import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
+import { element } from '@angular/core/src/render3/instructions';
+import { NotificationMessage } from './interfaces/firebase';
+import { NavbarComponent } from './components/core/navbar/navbar.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -73,45 +76,208 @@ export class AppComponent {
     // this.temp = this.end;
   }
 
-  constructor(private router: Router, private nav: NavigationService,
-    private dept: DeptService, public fAuth: AngularFireAuth, private db: AngularFireDatabase) {
-    this.items = db.list('users/' + localStorage.getItem('id')).valueChanges();
-    
-    // this.dept.getDept()
+
+  notification: any;
+  public notificaitonMessages = [];
+  memo: number = 0;
+  message: number = 0;
+
+  isSoftwareHouse: boolean = false;
+
+
+  constructor(public fAuth: AngularFireAuth, private db: AngularFireDatabase,
+    public router: Router, private _pushNotificationService: PushNotificationService) {
+    // db.list('users/VqrqEkgaXe3RNWXI8zzSsobqhiTdEZ4hylED/notificaiton/').valueChanges().subscribe((data) => {
+    //   this.notification = data
+    //   this.notificaitonMessages.splice(0);
+    //   const ide = this.db.createPushId();
+    //   console.log(ide)
+    //   for(let item of this.notification){
+    //     console.log(data)
+    //     if(item.status == "un-read"){
+    //       this.notificaitonMessages.push(item);
+    //     }
+    //   }
+
+    //   console.log(this.notificaitonMessages)
+    // });
+
+    db.list('users/VqrqEkgaXe3RNWXI8zzSsobqhiTdEZ4hylED/notificaiton/').snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    ).subscribe((data) => {
+      this.notification = data
+      this.notificaitonMessages.splice(0);
+      for (let item of this.notification) {
+        if (item.status == "un-read") {
+          this.notificaitonMessages.push(item);
+        }
+      }
+
+      this.notificaitonMessages.forEach(element => {
+        this.pushNotification(element.title, element.message)
+      })
+    });
+    this.messageNotificaitonUpdate();
   }
 
-  user$: any;
+  messageNotificaitonUpdate() {
+    this.memo = 0;
+    // Memo
+    // Manager ID
+    this.db.list('notes/9JU1uZdcU1yLpDEWdVKKdjlaJQCTEKaecl7m/').snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    ).subscribe((data: any) => {
+      console.log('hello')
+      // Manager ID
+      for (let key of data) {
+        this.db.list('notes/' + localStorage.getItem('id') + '/' + key.key + '/readers').snapshotChanges().pipe(
+          map(changes =>
+            changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+          )
+        ).subscribe((element: any) => {
+          console.log('hi')
+          let count = 0;
+          for (let item of element) {
+            if (item.employeeID == localStorage.getItem('id')) {
+              count = count + 1;
+            }
+          }
+          if(count == 0) {
+            console.log(true)
+            this.memo = this.memo + 1;
+          }
+        });
+      }
+    });
+  }
 
+  onRead(data) {
+    this.db.database.ref('users/VqrqEkgaXe3RNWXI8zzSsobqhiTdEZ4hylED/notificaiton/' + data).update({
+      status: "read"
+    })
+  }
 
-  itemValue = '';
-  items: Observable<any[]>;
+  onView(data, read) {
+    this.onRead(read);
+    this.router.navigate(['/project/' + data]);
+  }
+
 
   ngOnInit() {
     this.company = localStorage.getItem('companyName');
+    if(localStorage.getItem('sof')) this.isSoftwareHouse = true;
+    else this.isSoftwareHouse = false;
+    this._pushNotificationService.requestPermission();
+
+    // this.delay(10000).then(() => {
+    //   console.log(this.profile)
+
+    //   for(let item of this.profile){
+    //     console.log(item.status)
+    //   }
+    // })
+
+    // this.getItem().snapshotChanges().pipe(
+    //   map(changes => {
+    //     changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+    //   })
+    // ).subscribe(res => {
+    //   console.log(res)
+    // })
+
+    // this.getItem().snapshotChanges().subscribe(res => {
+    //   console.log(res)
+    //   this.employeeList = [];
+    //   res.forEach(element => {
+    //     console.log(element)
+    //     let x = element.payload.toJSON();
+    //     x = element.key;
+    //     console.log(x)
+    //     this.employeeList.push(x);
+    //   });
+    // })
+
+    // this.getItem().snapshotChanges().pipe(
+    //   map(res => {
+    //     res.map(a => {
+    //       let g;
+    //       g.key = a.payload.key;
+
+    //       let p = []
+    //       a.payload.val().p.array.forEach(element => {
+    //         p.push(element)
+    //       });
+
+    //       g.p = p;
+
+    //       console.log(g)
+    //     })
+    //   })
+    // )
+
+
+    // this.delay(10000).then(()=>{
+    //   console.log(this.employeeList)
+    // })
+
 
     // this.dept.getDept(localStorage.getItem('companyID'));
 
-
-
-    this.end = 10;
+    // this.end = 10;
     // this.temp = this.end;
+
+    // VqrqEkgaXe3RNWXI8zzSsobqhiTdEZ4hylED test employee for notification
+
+    // this.db.object('users/VqrqEkgaXe3RNWXI8zzSsobqhiTdEZ4hylED/notificaiton/')
+    //   .valueChanges().subscribe(action => {
+    //     if (action) {
+    //       // this.items = this.db.list('users/VqrqEkgaXe3RNWXI8zzSsobqhiTdEZ4hylED/notificaiton/')
+
+    //       console.log(action)
+
+
+    //       // console.log("break")
+    //       // console.log(this.items)
+
+    //       // let str = JSON.stringify(action);
+    //       // for (let i = 0; i < str.length; i++) {
+    //       //   console.log("ele:  " + str[i]);
+    //       // }
+    //       // console.log(str);
+    //       // Object.keys(JSON.parse(str)).map(res => {
+    //       // console.log(res)
+    //       // console.log(JSON.parse(res))
+    //       // })
+
+
+
+    //     }
+    //   })
 
 
     // console.log(this.fAuth.auth.currentUser.email);
 
-    this.fAuth.user.subscribe(user => {
-      if (user) {
-        // console.log(user.uid);
-        // console.log(user.email)
-      }
-    })
+    // this.fAuth.user.subscribe(user => {
+    //   if (user) {
+    //     console.log(user.uid);
+    //     console.log(user.email)
+    //   }
+    // })
 
-    this.db.object('users/name').valueChanges().subscribe(action =>{
-      // console.log(action);
-      if(action == "hamza"){
-        // console.log(12)
-      }
-    })
+    // this.db.object('users/' + localStorage.getItem('id') + '/name').valueChanges().subscribe(action => {
+    //   console.log(action);
+    //   console.log('users/' + localStorage.getItem('id') + '/name')
+    //   if (action == "SolveProblems") {
+    //     console.log(12)
+    //   }
+    // })
+
+
+
 
     // console.log(this.db.object('users/'+ localStorage.getItem('id')).valueChanges())
     // this.db.list('users/' + localStorage.getItem('id')).valueChanges().subscribe(item => {
@@ -133,6 +299,37 @@ export class AppComponent {
     // })
 
 
+  }
+
+
+  pushNotification(heading, message) {
+    const title = heading;
+    const options = new PushNotificationOptions();
+    options.body = message;
+    options.icon = 'src/assets/images/logo.png';
+
+    this._pushNotificationService.create(title, options).subscribe((notif) => {
+      if (notif.event.type === 'show') {
+        console.log('onshow');
+        setTimeout(() => {
+          notif.notification.close();
+        }, 5000);
+      }
+      if (notif.event.type === 'click') {
+        console.log('click');
+        notif.notification.close();
+      }
+      if (notif.event.type === 'close') {
+        console.log('close');
+      }
+    },
+      (err) => {
+        console.log(err);
+      });
+  }
+
+  async delay(ms: number) {
+    await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("fired"));
   }
 
   reset() {

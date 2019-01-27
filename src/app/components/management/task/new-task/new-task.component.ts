@@ -48,7 +48,6 @@ export class NewTaskComponent implements OnInit {
   }
 
   onChange(data) {
-    console.log(data);
     this.proj.getProj(data);
     this.skil.getSkill(data);
     this.delay(3000).then(any => {
@@ -62,8 +61,8 @@ export class NewTaskComponent implements OnInit {
   }
 
   onAdd(data) {
-    console.log(data.name)
-    this.selectedSkills.push(data.name.toString());
+    console.log(data.id)
+    this.selectedSkills.push(data.id.toString());
     console.log(this.selectedSkills.toLocaleString());
     console.log(this.selectedSkills);
   }
@@ -114,6 +113,8 @@ export class NewTaskComponent implements OnInit {
       }
     })
     this.rForm.reset();
+    this.selectedSkills.splice(0);
+    this.items.slice(0);
   }
 
 

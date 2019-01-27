@@ -7,6 +7,10 @@ import { DeptService } from 'src/app/services/dept/dept.service';
 import { DesigService } from 'src/app/services/desig/desig.service';
 import { RolService } from 'src/app/services/rol/rol.service';
 import { ActivatedRoute } from '@angular/router';
+import { SkilService } from 'src/app/services/skil/skil.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { FireAuth } from 'src/app/interfaces/auth';
 
 @Component({
   selector: 'app-new-employee',
@@ -22,6 +26,10 @@ export class NewEmployeeComponent implements OnInit {
   rForm: FormGroup;
   dismissible = true;
 
+  selectedSkills = [];
+  public item = [];
+  public items = [];
+
   id: String = "";
   empName: String = "";
   empEmail: String = "";
@@ -32,7 +40,7 @@ export class NewEmployeeComponent implements OnInit {
   imageSrc: string = "/src/assets/images/empty.png";
   fieldsDisabled: boolean = false;
   userImage: File;
-
+  fireAuth: FireAuth;
   alerts: any[] = [];
   isLoading: boolean = false;
 
@@ -40,8 +48,8 @@ export class NewEmployeeComponent implements OnInit {
 
   constructor(public emp: EmpService, public dept: DeptService,
     public rol: RolService, public desig: DesigService,
-    public app: AppComponent, public fb: FormBuilder,
-    private route: ActivatedRoute) {
+    public app: AppComponent, public fb: FormBuilder, public skil: SkilService,
+    private route: ActivatedRoute, public fAuth: AngularFireAuth, private db: AngularFireDatabase) {
     this.route.params.subscribe(params => this.user$ = params.id);
 
     this.rForm = fb.group({
@@ -109,17 +117,32 @@ export class NewEmployeeComponent implements OnInit {
 
   handleEmp(data) {
     this.emp.getEmp(data, true);
+    this.skil.getSkill(data);
+    this.delay(3000).then(any => {
+      console.log(2)
+      this.items = this.skil.skilList;
+      console.log(this.items)
+    });
   }
 
   onChange(data) {
+    console.log(data)
+
     this.emp.getEmp(data, false);
-    console.log(data);
+
   }
 
   onSubmit(post) {
     this.isLoading = true;
+    //  let fd = new FormData();
+    //  fd.append('image', this.selectedFile ,this.selectedFile.name)
+    const formData = new FormData();
+    formData.append('image', this.selectedFile, this.selectedFile.name);
+    console.log(formData);
 
-     let formData = new FormData();
+    //  console.log(fd.get('image'))
+    //  console.log(this.selectedFile)
+    //  console.log(this.selectedFile.name)
 
     if (!this.isUpdate) {
       this.empReq = {
@@ -132,7 +155,8 @@ export class NewEmployeeComponent implements OnInit {
         mgr: post.empMgr,
         roleId: post.empRole,
         designationId: post.empDesig,
-        image: formData.append('myfile', this.selectedFile)
+        skills: this.selectedSkills.toString(),
+        image: formData
       }
 
       console.log(this.empReq);
@@ -140,7 +164,9 @@ export class NewEmployeeComponent implements OnInit {
       this.emp.createEmp(this.empReq).subscribe(res => {
         console.log(res)
         if (res.status == 1) {
-          this.isLoading = false;
+          this.register(res, post.empPassword).then(() => {
+            this.isLoading = false;
+          });
           console.log(res);
           this.app.alerts.push({
             type: 'success',
@@ -148,6 +174,7 @@ export class NewEmployeeComponent implements OnInit {
             msg: `${res.message}`,
             timeout: 5000
           });
+
         } else {
           this.isLoading = false;
           this.alerts.push({
@@ -191,23 +218,60 @@ export class NewEmployeeComponent implements OnInit {
     }
 
     this.rForm.reset();
+    this.selectedSkills.splice(0);
+    this.items.splice(0);
+    this.imageSrc = "/src/assets/images/empty.png";
 
   }
 
-  selectedFile: File;
+  async register(res, password) {
+    try {
+      var r = await this.fAuth.auth.createUserWithEmailAndPassword(
+        res.data.email,
+        password
+      );
+      if (r) {
 
-  readURL(event: any) {
-    // this.userImage = event.target.files[0];
-    // // this.imageSelected = this.userFile.name;
-    // if (event.target.files && event.target.files[0]) {
-    //   const reader = new FileReader();
-    //   reader.onload = (e: any) => {
-    //     this.imageSrc = e.target.result;
-    //   };
-    //   reader.readAsDataURL(event.target.files[0]);
-    // }
-    this.selectedFile = event.target.files[0]
-    
+        this.fireAuth = {
+          id: res.data.id
+        }
+        console.log(r);
+        // this.db.database.ref('status/' + res.data.id).push({
+          
+        // }).then(() => {
+          this.db.database.ref('users/' + res.data.id).set({
+            name: res.data.name,
+            email: res.data.email,
+            manager: res.data.mgr,
+            status: "Avaliable"
+          }).then(data => {
+            this.isLoading = false;
+          })
+        // })
+      }
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  selectedFile: File = null;
+
+  readURL(event) {
+    this.userImage = event.target.files[0];
+    // this.imageSelected = this.userFile.name;
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageSrc = e.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    this.selectedFile = <File>event.target.files[0];
+
+    console.log(event)
+    // this.selectedFile = event.item(0);
+    // console.log(this.selectedFile)
   }
 
   onUpdate(id: String, name: String, email: String, password: String
@@ -239,6 +303,19 @@ export class NewEmployeeComponent implements OnInit {
       });
     })
 
+  }
+
+  onAdd(data) {
+    console.log(data.name)
+    this.selectedSkills.push(data.name.toString());
+    console.log(this.selectedSkills.toLocaleString());
+    console.log(this.selectedSkills);
+  }
+
+  onRemove(data) {
+    this.selectedSkills.splice(this.selectedSkills.indexOf(data), 1);
+    console.log(this.selectedSkills.toLocaleString());
+    console.log(this.selectedSkills);
   }
 
 }

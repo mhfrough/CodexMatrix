@@ -1,0 +1,7 @@
+.card-body small {
+    align-self: flex-end;
+  }
+
+  .card-body{
+    white-space: pre-line;
+  }

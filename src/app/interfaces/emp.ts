@@ -8,7 +8,8 @@ export interface EmpReq {
     mgr: String,
     roleId: String,
     designationId: String,
-    image,
+    skills: string,
+    image: FormData,
 }
 
 export interface EmpPut {
@@ -28,4 +29,8 @@ export interface EmpDel {
 export interface EmpDesigPut {
     userId: String,
     designationId: String
+}
+
+export interface EmpStatus{
+    status: "Avaliable" | "Working" | "Busy",
 }
