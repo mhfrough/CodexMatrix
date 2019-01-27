@@ -50,7 +50,7 @@ export class AssignEmployeeComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(!this.app.isSoftwareHouse) this.router.navigate(['']);
+    if (!this.app.isSoftwareHouse) this.router.navigate(['']);
     this.dept.getDept(localStorage.getItem('companyID'));
     this.desig.getDesig(localStorage.getItem('companyID'));
     console.log(this.dept.deptList);
@@ -97,32 +97,30 @@ export class AssignEmployeeComponent implements OnInit {
       icon: "assignment_ind"
     }
 
-    this.firebase.notification(post.empId, this.fbase).then(() => console.log("Notify"));
 
-    // this.proj.assignEmp(this.empProjReq).subscribe(res => {
-    //   console.log(res);
-    //   if (res.status == 1) {
-    //     this.isLoading = false;
-    //     // Department Creation Successful
-    //     this.notification(post.empId, this.notificationCount + 1, post.projId, localStorage.getItem('id'), "Project Assignment", "You are assigned to "
-    //       + this.projName + " by " + this.empName).then(() => {
-    //         this.app.alerts.push({
-    //           type: 'success',
-    //           icon: 'done',
-    //           msg: `${res.message}`,
-    //           timeout: 5000
-    //         });
-    //       })
-    //   } else {
-    //     this.isLoading = false;
-    //     this.app.alerts.push({
-    //       type: 'warning',
-    //       icon: 'warning',
-    //       msg: `${res.message}`,
-    //       timeout: 5000
-    //     });
-    //   }
-    // })
+
+    this.proj.assignEmp(this.empProjReq).subscribe(res => {
+      console.log(res);
+      if (res.status == 1) {
+        this.isLoading = false;
+        // Department Creation Successful
+        this.firebase.notification(post.empId, this.fbase).then(() => console.log("Notify"));
+        this.app.alerts.push({
+          type: 'success',
+          icon: 'done',
+          msg: `${res.message}`,
+          timeout: 5000
+        });
+      } else {
+        this.isLoading = false;
+        this.app.alerts.push({
+          type: 'warning',
+          icon: 'warning',
+          msg: `${res.message}`,
+          timeout: 5000
+        });
+      }
+    })
     this.rForm.reset();
   }
 

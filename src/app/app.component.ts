@@ -1,17 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavigationService } from './services/core/navigation/navigation.service';
-import { DeptService } from './services/dept/dept.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { map } from 'rxjs/operators';
-import { Key } from 'protractor';
 import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
-import { element } from '@angular/core/src/render3/instructions';
-import { NotificationMessage } from './interfaces/firebase';
-import { NavbarComponent } from './components/core/navbar/navbar.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -102,7 +94,7 @@ export class AppComponent {
     //   console.log(this.notificaitonMessages)
     // });
 
-    db.list('users/VqrqEkgaXe3RNWXI8zzSsobqhiTdEZ4hylED/notificaiton/').snapshotChanges().pipe(
+    db.list('users/' + localStorage.getItem('id') + '/notificaiton/').snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       )
@@ -146,7 +138,7 @@ export class AppComponent {
               count = count + 1;
             }
           }
-          if(count == 0) {
+          if (count == 0) {
             console.log(true)
             this.memo = this.memo + 1;
           }
@@ -156,7 +148,7 @@ export class AppComponent {
   }
 
   onRead(data) {
-    this.db.database.ref('users/VqrqEkgaXe3RNWXI8zzSsobqhiTdEZ4hylED/notificaiton/' + data).update({
+    this.db.database.ref('users/' + localStorage.getItem('id') + '/notificaiton/' + data).update({
       status: "read"
     })
   }
@@ -169,7 +161,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.company = localStorage.getItem('companyName');
-    if(localStorage.getItem('sof')) this.isSoftwareHouse = true;
+    if (localStorage.getItem('sof')) this.isSoftwareHouse = true;
     else this.isSoftwareHouse = false;
     this._pushNotificationService.requestPermission();
 

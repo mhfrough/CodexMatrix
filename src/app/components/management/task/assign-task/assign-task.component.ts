@@ -84,33 +84,33 @@ export class AssignTaskComponent implements OnInit {
       icon: "list_alt"
     }
 
-    this.firebase.notification(post.empId, this.fbase).then(() => console.log("Notify"));
 
-    // this.task.assignTask(this.assigTaskReq).subscribe(res => {
-    //   if (res.status == 1) {
-    //     console.log(res);
 
-    //     // this.db.database.ref('users/' + localStorage.getItem('id')).
-    //     // this.db.object('users/'+ localStorage.getItem('id')).valueChanges()
+    this.task.assignTask(this.assigTaskReq).subscribe(res => {
+      if (res.status == 1) {
+        console.log(res);
+        this.firebase.notification(post.empId, this.fbase).then(() => console.log("Notify"));
+        // this.db.database.ref('users/' + localStorage.getItem('id')).
+        // this.db.object('users/'+ localStorage.getItem('id')).valueChanges()
 
-    //     this.isLoading = false;
-    //     this.app.alerts.push({
-    //       type: 'success',
-    //       icon: 'done',
-    //       msg: `${res.message}`,
-    //       timeout: 5000
-    //     });
-    //   } else {
-    //     console.log(false)
-    //     this.isLoading = false;
-    //     this.app.alerts.push({
-    //       type: 'warning',
-    //       icon: 'warning',
-    //       msg: `${res.message}`,
-    //       timeout: 5000
-    //     });
-    //   }
-    // })
+        this.isLoading = false;
+        this.app.alerts.push({
+          type: 'success',
+          icon: 'done',
+          msg: `${res.message}`,
+          timeout: 5000
+        });
+      } else {
+        console.log(false)
+        this.isLoading = false;
+        this.app.alerts.push({
+          type: 'warning',
+          icon: 'warning',
+          msg: `${res.message}`,
+          timeout: 5000
+        });
+      }
+    })
     this.rForm.reset();
   }
 

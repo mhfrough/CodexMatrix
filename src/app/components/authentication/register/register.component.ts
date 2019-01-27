@@ -163,7 +163,8 @@ export class RegisterComponent implements OnInit {
         console.log(r);
         this.db.database.ref('users/' + res.data.id).set({
           name: res.data.name,
-          email: res.data.email
+          email: res.data.email,
+          status: 'Available'
         }).then(data => {
           this.isLoading = false;
         })

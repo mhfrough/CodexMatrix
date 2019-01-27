@@ -23,7 +23,7 @@ export class DeptService {
   }
 
   createDept(data: DeptReq) {
-    this.deptList = [];
+    // this.deptList = [];
     return this.http.post<any>(g.apiURL + '/create-department', data);
   }
 

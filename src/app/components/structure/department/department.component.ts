@@ -74,10 +74,10 @@ export class DepartmentComponent implements OnInit {
         if (res.status == 1) {
           // this.isLoading = false;
 
-
           // this.dept.deptList.push()
-          
-          
+
+          this.dept.deptList.push(res.data)
+
           console.log(res);
           // Department Creation Successful
           this.app.alerts.push({
@@ -86,7 +86,7 @@ export class DepartmentComponent implements OnInit {
             msg: `${res.message}`,
             timeout: 5000
           });
-          this.getAllDept();
+          // this.getAllDept();
         } else {
           this.isLoading = false;
           console.log(res);
@@ -145,7 +145,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   onDelete(id: String) {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.deptDel = {
       id: id
     }
@@ -153,9 +153,14 @@ export class DepartmentComponent implements OnInit {
     this.dept.deleteDept(this.deptDel).subscribe(res => {
 
 
-      // if(res.status == 1) this.dept.deptList.slice()
-      
-      
+      if (res.status == 1) {
+        const index: number = this.dept.deptList.indexOf(id);
+        if (index !== -1) {
+          this.dept.deptList = this.dept.deptList.splice(index, 1);
+        }
+      }
+
+
       // Department Deleted
       this.isLoading = false;
       this.app.alerts.push({
@@ -164,7 +169,7 @@ export class DepartmentComponent implements OnInit {
         msg: `${res.message}`,
         timeout: 5000
       });
-      this.getAllDept();
+      // this.getAllDept();
     });
 
     this.rForm.reset();
