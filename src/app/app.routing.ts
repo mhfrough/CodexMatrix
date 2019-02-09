@@ -10,8 +10,6 @@ import { DesignationComponent } from './components/structure/designation/designa
 import { AnalyticsComponent } from './components/dashboard/analytics/analytics.component';
 import { ErrorComponent } from './components/core/error/error.component';
 import { AuthGuard } from './app.auth.guard';
-import { TaskComponent } from './components/management/task/task/task.component';
-import { TaskOverviewComponent } from './components/management/task/task-overview/task-overview.component';
 import { NewEmployeeComponent } from './components/management/employee/new-employee/new-employee.component';
 import { EmployeeProfileComponent } from './components/management/employee/employee-profile/employee-profile.component';
 import { ViewEmployeesComponent } from './components/management/employee/view-employees/view-employees.component';
@@ -27,6 +25,8 @@ import { UserprofileComponent } from './components/dashboard/profile/userprofile
 import { ProfileEditComponent } from './components/dashboard/profile/profile-edit/profile-edit.component';
 import { MemoComponent } from './components/dashboard/memo/memo/memo.component';
 import { MemoDetailsComponent } from './components/dashboard/memo/memo-details/memo-details.component';
+import { AboutTaskComponent } from './components/management/task/about-task/about-task.component';
+import { ProjectTaskComponent } from './components/management/project/project-task/project-task.component';
 
 const routes: Routes = [
   // Dashboard Section
@@ -45,20 +45,22 @@ const routes: Routes = [
   { path: 'structure/skills', component: SkillsComponent, canActivate: [AuthGuard] },
   { path: 'structure/designation', component: DesignationComponent, canActivate: [AuthGuard] },
   // Management Section - update lath link
-  { path: 'management/new-employee', component: NewEmployeeComponent },
-  { path: 'employee/:id', component: EmployeeProfileComponent },
-  { path: 'management/update-employee/:id', component: UpdateEmployeeComponent },
-  { path: 'management/view-employees', component: ViewEmployeesComponent },
-  { path: 'management/new-project', component: NewProjectComponent },
-  { path: 'project/view-projects', component: ViewProjectsComponent },
-  { path: 'project/:id', component: ProjectDetailsComponent },
-  { path: 'management/assign-employee', component: AssignEmployeeComponent },
-  { path: 'management/assign-task', component: AssignTaskComponent },
-  { path: 'management/task/new-task', component: NewTaskComponent },
+  { path: 'management/new-employee', component: NewEmployeeComponent, canActivate: [AuthGuard] },
+  { path: 'employee/:id', component: EmployeeProfileComponent, canActivate: [AuthGuard] },
+  { path: 'management/update-employee/:id', component: UpdateEmployeeComponent, canActivate: [AuthGuard] },
+  { path: 'management/view-employees', component: ViewEmployeesComponent, canActivate: [AuthGuard] },
+  { path: 'management/new-project', component: NewProjectComponent, canActivate: [AuthGuard] },
+  { path: 'project/view-projects', component: ViewProjectsComponent, canActivate: [AuthGuard] },
+  { path: 'project/:id', component: ProjectDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'project-task/:id', component: ProjectTaskComponent, canActivate: [AuthGuard] },
+  { path: 'management/assign-employee', component: AssignEmployeeComponent, canActivate: [AuthGuard] },
+  { path: 'management/assign-task', component: AssignTaskComponent, canActivate: [AuthGuard] },
+  // { path: 'task/:id', component: TaskdetailsComponent, canActivate: [AuthGuard] },
+  // { path: 'task/:id', component: TaskDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'task/:id', component: AboutTaskComponent, canActivate: [AuthGuard] },
+  { path: 'management/task/new-task', component: NewTaskComponent, canActivate: [AuthGuard] },
   // Management Section + Task
-  { path: 'management/task/task', component: TaskComponent },
-  { path: 'management/task/task-overview', component: TaskOverviewComponent },
-  { path: 'task/my-tasks', component: MyTaskComponent},
+  { path: 'management/task/my-tasks', component: MyTaskComponent, canActivate: [AuthGuard] },
 
   //Error Section
   { path: '**', component: ErrorComponent }

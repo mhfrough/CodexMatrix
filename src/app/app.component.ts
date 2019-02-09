@@ -14,6 +14,7 @@ export class AppComponent {
 
   title = 'codexmatrix';
   company: String = "";
+  role: string = 'employee';
 
   action: String = 'Create';
   button: String = 'Submit';
@@ -94,7 +95,7 @@ export class AppComponent {
     //   console.log(this.notificaitonMessages)
     // });
 
-    db.list('users/' + localStorage.getItem('id') + '/notificaiton/').snapshotChanges().pipe(
+    db.list(localStorage.getItem('companyID') + '/users/' + localStorage.getItem('id') + '/notificaiton/').snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       )
@@ -108,7 +109,8 @@ export class AppComponent {
       }
 
       this.notificaitonMessages.forEach(element => {
-        this.pushNotification(element.title, element.message)
+        // on create assign task/ project push this notification
+        // this.pushNotification(element.title, element.message)
       })
     });
     this.messageNotificaitonUpdate();
@@ -118,20 +120,18 @@ export class AppComponent {
     this.memo = 0;
     // Memo
     // Manager ID
-    this.db.list('notes/9JU1uZdcU1yLpDEWdVKKdjlaJQCTEKaecl7m/').snapshotChanges().pipe(
+    this.db.list(localStorage.getItem('companyID') + '/notes/' + localStorage.getItem('mgr') + '/').snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       )
     ).subscribe((data: any) => {
-      console.log('hello')
       // Manager ID
       for (let key of data) {
-        this.db.list('notes/' + localStorage.getItem('id') + '/' + key.key + '/readers').snapshotChanges().pipe(
+        this.db.list(localStorage.getItem('companyID') + '/notes/' + localStorage.getItem('mgr') + '/' + key.key + '/readers').snapshotChanges().pipe(
           map(changes =>
             changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
           )
         ).subscribe((element: any) => {
-          console.log('hi')
           let count = 0;
           for (let item of element) {
             if (item.employeeID == localStorage.getItem('id')) {
@@ -148,7 +148,7 @@ export class AppComponent {
   }
 
   onRead(data) {
-    this.db.database.ref('users/' + localStorage.getItem('id') + '/notificaiton/' + data).update({
+    this.db.database.ref(localStorage.getItem('companyID') + '/users/' + localStorage.getItem('id') + '/notificaiton/' + data).update({
       status: "read"
     })
   }
@@ -161,9 +161,10 @@ export class AppComponent {
 
   ngOnInit() {
     this.company = localStorage.getItem('companyName');
-    if (localStorage.getItem('sof')) this.isSoftwareHouse = true;
-    else this.isSoftwareHouse = false;
+    this.role = localStorage.getItem('role');
     this._pushNotificationService.requestPermission();
+    if (localStorage.getItem('domain') == 'sof') { this.isSoftwareHouse = true; }
+    else { this.isSoftwareHouse = false; }
 
     // this.delay(10000).then(() => {
     //   console.log(this.profile)

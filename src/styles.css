@@ -16,6 +16,10 @@
     visibility: hidden
 }
 
+.underline {
+    text-decoration: underline;
+}
+
 .tit{
     font-weight: 500;
     font-size: 1rem;
@@ -109,15 +113,24 @@
 .href{
     color:inherit;
 }
+.blue{
+    color:#007bff !important;
+}
 .href:hover{
     text-decoration: underline !important;
     color: #000;
 }
 
+
 .pull-right{
     float: right;
 }
-
+.pull-left{
+    float: left;
+}
+.algin-left{
+    text-align: left;
+}
 /* .srh-bx {
     border: 1px dotted;
     border-radius: 6px;
@@ -266,4 +279,23 @@ table td{
 
 .dat{
     font-weight: 700;
+}
+
+.dropdown-item-btn{
+font-weight: 400 !important;
+    display: block !important;
+    font-size: 12px;
+    clear: both !important;
+    width: 100% !important;
+    padding: 2px 1.5rem !important;
+    text-align: inherit !important;
+    white-space: nowrap !important;
+    color: #6e84a3 !important;
+    border: 0 !important;
+    background-color: transparent !important;
+    cursor: pointer;
+}
+.dropdown-item-btn:hover{
+    background-color: #f2f2f2 !important;
+    color: #202020 !important;
 }

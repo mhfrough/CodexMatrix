@@ -47,7 +47,7 @@ export class DesignationComponent implements OnInit {
   }
 
   sortDesc() {
-    this.desig.desigList= this.desig.desigList.sort((a, b) => 0 - (a > b ? -1 : 1));
+    this.desig.desigList = this.desig.desigList.sort((a, b) => 0 - (a > b ? -1 : 1));
   }
 
   sortAsc() {
@@ -61,7 +61,7 @@ export class DesignationComponent implements OnInit {
   }
 
   onSubmit(post) {
-    this.isLoading = true;
+    // this.isLoading = true;
 
     if (!this.isUpdate) {
       this.desigReq = {
@@ -71,16 +71,17 @@ export class DesignationComponent implements OnInit {
 
       this.desig.createDesig(this.desigReq).subscribe(res => {
         if (res.status == 1) {
-          this.isLoading = false;
-          console.log(res);
+          // this.isLoading = false;
+          // console.log(res);
+          this.desig.desigList.push(res.data)
           this.alerts.push({
             type: 'success',
             msg: `${res.message}`,
             timeout: 5000
           });
-          this.getAllDesig();
+          // this.getAllDesig();
         } else {
-          this.isLoading = false;
+          // this.isLoading = false;
           console.log(res);
           this.alerts.push({
             type: 'warning',
@@ -97,7 +98,7 @@ export class DesignationComponent implements OnInit {
 
       this.desig.updateDesig(this.desigPut).subscribe(res => {
         if (res.status == 1) {
-          this.isLoading = false;
+          // this.isLoading = false;
           console.log(res);
           this.alerts.push({
             type: 'success',
@@ -106,7 +107,7 @@ export class DesignationComponent implements OnInit {
           });
           this.getAllDesig();
         } else {
-          this.isLoading = false;
+          // this.isLoading = false;
           console.log(res);
           this.alerts.push({
             type: 'warning',
@@ -129,23 +130,26 @@ export class DesignationComponent implements OnInit {
   }
 
   onDelete(id: String) {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.desigDel = {
       designationId: id
     }
     this.desig.deleteDesig(this.desigDel).subscribe(res => {
-      this.isLoading = false;
+      // this.isLoading = false;
       // Department Deleted
+
+      this.desig.desigList = this.desig.desigList.filter(desig => desig.id !== id);
 
       this.alerts.push({
         type: 'danger',
         msg: `${res.message}`,
         timeout: 5000
       });
-      this.getAllDesig();
-      this.rForm.reset();
-      this.app.reset();
+      // this.getAllDesig();
+
     })
+    this.rForm.reset();
+    this.app.reset();
   }
 
 }

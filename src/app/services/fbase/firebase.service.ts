@@ -12,7 +12,7 @@ export class FirebaseService {
   // Update Notification Messages
   async notification(id, data) {
     try {
-      this.db.database.ref('users/' + id + '/notificaiton').push(data)
+      this.db.database.ref(localStorage.getItem('companyID') + '/users/' + id + '/notificaiton').push(data)
     } catch (error) {
       console.error(error);
     }

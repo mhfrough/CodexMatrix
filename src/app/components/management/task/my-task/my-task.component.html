@@ -80,7 +80,8 @@
                 <tbody>
                   <tr *ngFor="let item of task.taskUser | filter : 'taskName' : searchString | slice: 0: app.end; index as i">
                     <td>{{i+1}}</td>
-                    <td class="lo-stats__order-details col-width">
+                    <td class="lo-stats__order-details col-width pointer" (click)="taskDetails(item.taskId, item)">
+                      
                       <strong *ngIf="item.givenById == assignedBy" class="clip"><i class="material-icons">info</i>
                         You've
                         Assigned This Task to
@@ -102,24 +103,24 @@
                       
                       <div *ngIf="item.status == 'pending' &&  item.givenById.toString() != assignedBy" class="btn-group d-table ml-auto"
                         role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-sm btn-white" (click)="acceptTask(item.taskId)"><span
+                        <button type="button" class="btn btn-sm btn-white" (click)="acceptTask(item.taskId, item.givenById, item.taskName)"><span
                             class="text-success"><i class="material-icons">done</i></span>
                           Accept</button>
-                        <button type="button" class="btn btn-sm btn-white" (click)="rejectTask(item.taskId)"><span
+                        <button type="button" class="btn btn-sm btn-white" (click)="rejectedTask(item.taskId, item.givenById, item.taskName)"><span
                             class="text-danger"><i class="material-icons">clear</i></span>
                           Reject</button>
                       </div>
 
                       <div *ngIf="item.status == 'in-progress' && item.givenById.toString() != assignedBy" class="btn-group d-table ml-auto" role="group"
                         aria-label="Basic example">
-                        <button type="button" class="btn btn-sm btn-white" (click)="submitTask(item.taskId)"><span
+                        <button type="button" class="btn btn-sm btn-white" (click)="submitTask(item.taskId, item.givenById, item.taskName)"><span
                             class="text-success"><i class="material-icons">done_all</i></span>
                           Submit</button>
                       </div>
 
                       <div *ngIf="item.status == 'rejected' && item.givenById.toString() != assignedBy" class="btn-group d-table ml-auto" role="group"
                         aria-label="Basic example">
-                        <button type="button" class="btn btn-sm btn-white" (click)="submitTask(item.taskId)"><span
+                        <button type="button" class="btn btn-sm btn-white" (click)="submitTask(item.taskId, item.givenById, item.taskName)"><span
                             class="text-success"><i class="material-icons">done_all</i></span>
                           Submit</button>
                       </div>
@@ -129,7 +130,7 @@
                         <button type="button" class="btn btn-sm btn-white" (click)="approveTask(item.taskId)"><span
                             class="text-success"><i class="material-icons">done_outline</i></span>
                           Approved</button>
-                        <button type="button" class="btn btn-sm btn-white" (click)="rejectTask(item.taskId)"><span
+                        <button type="button" class="btn btn-sm btn-white" (click)="rejectedTask(item.taskId)"><span
                             class="text-danger"><i class="material-icons">clear</i></span>
                           Reject</button>
                       </div>

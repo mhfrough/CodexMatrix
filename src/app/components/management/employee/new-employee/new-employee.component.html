@@ -72,7 +72,8 @@
                     </option>
                   </select>
                 </div>
-                <small class="form-text text-muted">to create new department <a routerLink="/structure/department">click
+                <small class="form-text text-muted">to create new department <a class="href blue" [popover]="department"
+                    [outsideClick]="true">click
                     here</a> </small>
                 <small class="alertMessage" *ngIf="!rForm.controls['empDept'].valid && rForm.controls['empDept'].touched">
                   Select department
@@ -95,7 +96,8 @@
                     </option>
                   </select>
                 </div>
-                <small class="form-text text-muted">to create new designation <a routerLink="/structure/designation">click
+                <small class="form-text text-muted">to create new designation <a class="href blue" [popover]="designation"
+                    [outsideClick]="true">click
                     here</a> </small>
                 <small class="alertMessage" *ngIf="!rForm.controls['empDesig'].valid && rForm.controls['empDesig'].touched">
                   Select designation
@@ -156,6 +158,9 @@
                       [showDropdownIfEmpty]="true" [dynamicUpdate]="false">
                     </tag-input-dropdown>
                   </tag-input>
+                  <small class="form-text text-muted">to add new skill <a class="href blue" [popover]="skill"
+                      [outsideClick]="true">click
+                      here</a> </small>
                 </div>
               </div>
             </div>
@@ -223,6 +228,31 @@
                 This Account</button>
             </div>
 
+            <div class="col-lg-12">
+              <div class="text-center">
+                <app-loading *ngIf="isLoading"></app-loading>
+              </div>
+              <div *ngIf="message.name != ''" class="alert-box" role="alert">
+                <div class="row">
+                  <div class="col-lg-2">
+                    <h2><i class="material-icons">
+                        info
+                      </i></h2>
+                  </div>
+                  <div class="col-lg-10 pull-right">
+                    <span>
+                      <strong class="dat">Employee Added Successfully</strong> <br />
+                      <small><strong class="dat">Name: </strong>{{message.name}}</small><br />
+                      <small><strong class="dat">Email: </strong>{{message.email}}</small>
+                    </span>
+                    <br /><br />
+                    <small class="underline" routerLink="/employee/{{message.id}}">click here to view employee profile</small>
+                  </div>
+                </div>
+              </div>
+              <br />
+            </div>
+
           </div>
 
         </fieldset>
@@ -234,3 +264,52 @@
   </div>
 
 </div>
+
+<ng-template #department>
+  <form *ngIf="departmentMsg == ''; else resMsg" role="form" method="POST" (ngSubmit)="addDepartment(name.value)">
+    <div class="input-group mb-1">
+      <input type="text" class="form-control" placeholder="Department Name" [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="nameValue" value="" #name autofocus>
+      <div class="input-group-append">
+        <button class="btn btn-white" type="submit" [disabled]="!nameValue">Submit</button>
+      </div>
+    </div>
+  </form>
+  <ng-template #resMsg>
+    {{departmentMsg}}
+  </ng-template>
+</ng-template>
+
+<ng-template #designation>
+  <form *ngIf="designationMsg == ''; else resMsg" role="form" method="POST" (ngSubmit)="addDesignation(name.value)">
+    <div class="input-group mb-1">
+      <input type="text" class="form-control" placeholder="Designation Name" [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="nameValue" value="" #name autofocus>
+      <div class="input-group-append">
+        <button class="btn btn-white" type="submit" [disabled]="!nameValue">Submit</button>
+      </div>
+    </div>
+  </form>
+  <ng-template #resMsg>
+    {{designationMsg}}
+  </ng-template>
+</ng-template>
+
+<ng-template #skill>
+  <form *ngIf="skillMsg == ''; else resMsg" role="form" method="POST" (ngSubmit)="addSkill(name.value, department.value)">
+    <div class="input-group mb-1">
+      <input type="text" class="form-control" placeholder="Skill" [ngModelOptions]="{standalone: true}" [(ngModel)]="nameValue"
+        value="" #name autofocus>
+      <select class="custom-select" [ngModelOptions]="{standalone: true}" [(ngModel)]="deptValue" value="" #department>
+        <option selected value="0">Choose...</option>
+        <option *ngFor="let item of dept.deptList" value="{{item.id}}">{{item.name}}</option>
+      </select>
+      <div class="input-group-append">
+        <button class="btn btn-white" type="submit" [disabled]="!nameValue || deptValue == '0'">Submit</button>
+      </div>
+    </div>
+  </form>
+  <ng-template #resMsg>
+    {{skillMsg}}
+  </ng-template>
+</ng-template>

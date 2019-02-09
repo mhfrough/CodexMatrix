@@ -46,6 +46,12 @@ export class NewEmployeeComponent implements OnInit {
 
   user$: Object;
 
+  message: any = {
+    id: '',
+    name: '',
+    email: ''
+  }
+
   constructor(public emp: EmpService, public dept: DeptService,
     public rol: RolService, public desig: DesigService,
     public app: AppComponent, public fb: FormBuilder, public skil: SkilService,
@@ -76,9 +82,9 @@ export class NewEmployeeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.rol.getRole();
     this.dept.getDept(localStorage.getItem('companyID'));
     this.desig.getDesig(localStorage.getItem('companyID'));
-    this.rol.getRole();
 
     if (this.user$ != null) {
 
@@ -175,9 +181,13 @@ export class NewEmployeeComponent implements OnInit {
             timeout: 5000
           });
 
+          this.message.id = res.data.id;
+          this.message.name = res.data.name;
+          this.message.email = res.data.email;
+
         } else {
           this.isLoading = false;
-          this.alerts.push({
+          this.app.alerts.push({
             type: 'warning',
             icon: 'warning',
             msg: `${res.message}`,
@@ -199,7 +209,7 @@ export class NewEmployeeComponent implements OnInit {
       this.emp.updateEmp(this.empPut).subscribe(res => {
         if (res.status == 1) {
           this.isLoading = false;
-          this.alerts.push({
+          this.app.alerts.push({
             type: 'info',
             icon: 'priority_high',
             msg: `${res.message}`,
@@ -207,7 +217,7 @@ export class NewEmployeeComponent implements OnInit {
           });
         } else {
           this.isLoading = false;
-          this.alerts.push({
+          this.app.alerts.push({
             type: 'warning',
             icon: 'warning',
             msg: `${res.message}`,
@@ -237,16 +247,16 @@ export class NewEmployeeComponent implements OnInit {
         }
         console.log(r);
         // this.db.database.ref('status/' + res.data.id).push({
-          
+
         // }).then(() => {
-          this.db.database.ref('users/' + res.data.id).set({
-            name: res.data.name,
-            email: res.data.email,
-            manager: res.data.mgr,
-            status: "Avaliable"
-          }).then(data => {
-            this.isLoading = false;
-          })
+        this.db.database.ref(localStorage.getItem('companyID') + '/users/' + res.data.id).set({
+          name: res.data.name,
+          email: res.data.email,
+          manager: res.data.mgr,
+          status: "Available"
+        }).then(data => {
+          this.isLoading = false;
+        })
         // })
       }
 
@@ -306,8 +316,8 @@ export class NewEmployeeComponent implements OnInit {
   }
 
   onAdd(data) {
-    console.log(data.name)
-    this.selectedSkills.push(data.name.toString());
+    console.log(data.id)
+    this.selectedSkills.push(data.id.toString());
     console.log(this.selectedSkills.toLocaleString());
     console.log(this.selectedSkills);
   }
@@ -316,6 +326,61 @@ export class NewEmployeeComponent implements OnInit {
     this.selectedSkills.splice(this.selectedSkills.indexOf(data), 1);
     console.log(this.selectedSkills.toLocaleString());
     console.log(this.selectedSkills);
+  }
+
+  // Pop-up Models
+
+  nameValue;
+  departmentMsg: string = '';
+  designationMsg: string = '';
+  skillMsg: string = '';
+
+  addDepartment(data) {
+    this.departmentMsg = "Waiting...";
+    this.dept.createDept({ name: data, companyId: localStorage.getItem('companyID') })
+      .subscribe(res => {
+        console.log(res)
+        if (res.status == 1) {
+          this.dept.deptList.push(res.data);
+          this.departmentMsg = "New Department Added Successfully!";
+        } else {
+          this.departmentMsg = "Error! Department Not Added";
+        }
+      });
+
+    this.nameValue = null;
+    this.delay(3000).then(() => this.departmentMsg = '');
+  }
+
+  addDesignation(data) {
+    this.designationMsg = "Waiting...";
+    this.desig.createDesig({ name: data, companyId: localStorage.getItem('companyID') })
+      .subscribe(res => {
+        console.log(res)
+        if (res.status == 1) {
+          this.desig.desigList.push(res.data);
+          this.designationMsg = "New Designation Added Successfully!";
+        } else {
+          this.designationMsg = "Error! Designation Not Added";
+        }
+      });
+
+    this.delay(3000).then(() => this.designationMsg = '');
+  }
+
+  addSkill(data, dept) {
+    this.skillMsg = 'Waiting...';
+    this.skil.createSkill({ name: data, deptId: dept }).subscribe(res => {
+      console.log(res)
+      if (res.status == 1) {
+        this.skil.skilList.push(res.data);
+        this.skillMsg = "New Skill Added Successfully!";
+      } else {
+        this.skillMsg = "Error! Skill Not Added";
+      }
+    });
+    this.nameValue = '';
+    this.delay(3000).then(() => this.skillMsg = '');
   }
 
 }

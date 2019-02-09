@@ -4,6 +4,8 @@
     <div class="col-lg-12 offset-lg-0 col-sm-4 text-center text-sm-left mb-0">
       <span class="text-uppercase page-subtitle">Project <span class="pull-right badge badge-warning">under
           construction</span></span>
+          <button type="button" class="mb-2 btn btn-primary mr-2 pull-right" (click)="assignTaskAutomatically()">Automatically
+            Assign Task</button>
       <h3 class="page-title">{{name}}</h3>
     </div>
   </div>
@@ -114,6 +116,46 @@
       </div>
     </div>
 
+    <div class="col-lg-8 offset-lg-0">
+      <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+          <h6 class="m-0">Project Details</h6>
+        </div>
+        <div class="card-body card-height-1">
+          <div>
+            <div style="display: block">
+              <canvas baseChart [datasets]="barChartData" [colors]="barChartColors" [labels]="barChartLabels" [options]="barChartOptions"
+                [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 offset-lg-0">
+      <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+          <h6 class="m-0">Task Doughnut Chart</h6>
+        </div>
+        <div class="card-body card-height-1">
+          <div style="display: block">
+            <canvas baseChart [data]="doughnutChartData" [colors]="doughnutChartColors" [options]="doughnutChartOptions"
+              [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
+          </div>
+          <br />
+          <ul class="taskStatus list-unstyled">
+            <li>Pending: <small>({{pendingTotal}})</small></li>
+            <li>Inprogress: <small>({{inprogressTotal}})</small></li>
+            <li>Completed: <small>({{completeTotal}})</small></li>
+            <li>Rejected: <small>({{rejectTotal}})</small></li>
+            <li>Approved: <small>({{approveTotal}})</small></li>
+          </ul>
+          <small class="bottom-text" *ngIf="task.taskList.length == 0"><strong class="dat">Note: </strong><i>"This
+              project does not have task therefore graph is displaying dummy data."</i></small>
+        </div>
+      </div>
+    </div>
+
     <div class="col-lg-8">
       <div class="card card-small mb-4">
         <div class="card-header border-bottom">
@@ -124,15 +166,16 @@
             <div class="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
               <div class="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0" data-toggle="buttons">
                 <label class="btn btn-white">
-                  <input type="radio" name="options" id="option1" autocomplete="off"> Tasks {{task.taskList.length}} </label>
+                  <input type="radio" name="options" id="option1" autocomplete="off"> Tasks {{task.taskList.length}}
+                </label>
                 <label class="btn btn-white">
                   <input type="radio" name="options" id="option2" autocomplete="off"> Pending {{pendingTotal}}</label>
-                  <label class="btn btn-white">
-                      <input type="radio" name="options" id="option2" autocomplete="off"> In-Progress {{inprogressTotal}}</label>
+                <label class="btn btn-white">
+                  <input type="radio" name="options" id="option2" autocomplete="off"> In-Progress {{inprogressTotal}}</label>
                 <label class="btn btn-white">
                   <input type="radio" name="options" id="option2" autocomplete="off"> Completed {{completeTotal}}</label>
-                  <label class="btn btn-white">
-                      <input type="radio" name="options" id="option2" autocomplete="off"> Approved {{approveTotal}}</label>
+                <label class="btn btn-white">
+                  <input type="radio" name="options" id="option2" autocomplete="off"> Approved {{approveTotal}}</label>
               </div>
             </div>
           </div>

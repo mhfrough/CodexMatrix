@@ -22,7 +22,7 @@
             </strong>
             <br />
 
-            <div class="form-group">
+            <div class="form-group" *ngIf="app.isSoftwareHouse">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="customSelect01">Department</label>
@@ -39,7 +39,7 @@
                 </small>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" *ngIf="app.isSoftwareHouse">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="customSelect01">Project</label>
@@ -75,7 +75,7 @@
                 </small>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="customSelect01">Given By</label>
@@ -86,7 +86,7 @@
                   </option>
                 </select>
               </div>
-            </div>
+            </div> -->
 
 
             <div class="form-group">

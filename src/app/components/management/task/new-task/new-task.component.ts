@@ -29,18 +29,45 @@ export class NewTaskComponent implements OnInit {
   isLoading: boolean = false;
   rForm: FormGroup;
   dismissible = true;
+
+  message: any = {
+    id: '',
+    name: '',
+    description: '',
+    created_at: '',
+    estimated_time: '',
+    priority: '',
+    projId: '',
+    required_skills: '',
+    taskCreatorId: '',
+    updated_at: ''
+  }
+
   constructor(public task: TaskService, public proj: ProjService,
     public dept: DeptService, public skil: SkilService,
     public fb: FormBuilder, public app: AppComponent) {
-    this.rForm = fb.group({
-      'deptId': [null, Validators.required],
-      'projId': [null, Validators.required],
-      'taskName': [null, Validators.required],
-      'taskDes': [null, Validators.required],
-      'date': [null, Validators.required],
-      'priority': [null, Validators.required],
-      // 'skills': [null, Validators.required]
-    });
+    if (this.app.isSoftwareHouse) {
+      this.rForm = fb.group({
+        'deptId': [null, Validators.required],
+        'projId': [null, Validators.required],
+        'taskName': [null, Validators.required],
+        'taskDes': [null, Validators.required],
+        'date': [null, Validators.required],
+        'priority': [null, Validators.required],
+        // 'skills': [null, Validators.required]
+      });
+    } else {
+      this.rForm = fb.group({
+        'deptId': [null, Validators.required],
+        // 'projId': [null, Validators.required],
+        'taskName': [null, Validators.required],
+        'taskDes': [null, Validators.required],
+        'date': [null, Validators.required],
+        'priority': [null, Validators.required],
+        // 'skills': [null, Validators.required]
+      });
+    }
+
   }
 
   ngOnInit() {
@@ -102,6 +129,9 @@ export class NewTaskComponent implements OnInit {
           msg: `${res.message}`,
           timeout: 5000
         });
+        this.message.id = res.data.id;
+        this.message.name = res.data.name;
+        this.message.description = res.data.description;
       } else {
         this.isLoading = false;
         this.app.alerts.push({
@@ -115,6 +145,44 @@ export class NewTaskComponent implements OnInit {
     this.rForm.reset();
     this.selectedSkills.splice(0);
     this.items.slice(0);
+  }
+
+  // Pop-up Models
+
+  nameValue;
+  departmentMsg: string = '';
+  skillMsg: string =  '';
+
+  addDepartment(data) {
+    this.departmentMsg = "Waiting...";
+    this.dept.createDept({ name: data, companyId: localStorage.getItem('companyID') })
+      .subscribe(res => {
+        console.log(res)
+        if (res.status == 1) {
+          this.dept.deptList.push(res.data);
+          this.departmentMsg = "New Department Added Successfully!";
+        } else {
+          this.departmentMsg = "Error! Department Not Added";
+        }
+      });
+
+    this.nameValue = null;
+    this.delay(3000).then(() => this.departmentMsg = '');
+  }
+
+  addSkill(data, dept) {
+    this.skillMsg = 'Waiting...';
+    this.skil.createSkill({ name: data, deptId: dept }).subscribe(res => {
+      console.log(res)
+      if (res.status == 1) {
+        this.skil.skilList.push(res.data);
+        this.skillMsg = "New Skill Added Successfully!";
+      } else {
+        this.skillMsg = "Error! Skill Not Added";
+      }
+    });
+    this.nameValue = '';
+    this.delay(3000).then(() => this.skillMsg = '');
   }
 
 

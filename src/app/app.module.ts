@@ -3,12 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AlertModule, TabsModule, ModalModule } from 'ngx-bootstrap';
+import { AlertModule, TabsModule, ModalModule, PopoverModule } from 'ngx-bootstrap';
 import { FilterPipe } from './app.filter';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { PushNotificationService } from 'ngx-push-notifications';
+import { ChartsModule } from 'ng2-charts';
+import {NgxPrintModule} from 'ngx-print';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth'
@@ -32,8 +34,6 @@ import { MessagesComponent } from './components/dashboard/messages/messages.comp
 import { ErrorComponent } from './components/core/error/error.component';
 import { UserprofileComponent } from './components/dashboard/profile/userprofile/userprofile.component';
 import { CompanyprofileComponent } from './components/dashboard/profile/companyprofile/companyprofile.component';
-import { TaskComponent } from './components/management/task/task/task.component';
-import { TaskOverviewComponent } from './components/management/task/task-overview/task-overview.component';
 import { NewEmployeeComponent } from './components/management/employee/new-employee/new-employee.component';
 import { NewProjectComponent } from './components/management/project/new-project/new-project.component';
 import { AssignEmployeeComponent } from './components/management/project/assign-employee/assign-employee.component';
@@ -46,10 +46,11 @@ import { UpdateEmployeeComponent } from './components/management/employee/update
 import { ViewProjectsComponent } from './components/management/project/view-projects/view-projects.component';
 import { ProjectDetailsComponent } from './components/management/project/project-details/project-details.component';
 import { MyTaskComponent } from './components/management/task/my-task/my-task.component';
-import { PendingComponent } from './components/management/task/pending/pending.component';
 import { ProfileEditComponent } from './components/dashboard/profile/profile-edit/profile-edit.component';
 import { MemoDetailsComponent } from './components/dashboard/memo/memo-details/memo-details.component';
 import { MemoComponent } from './components/dashboard/memo/memo/memo.component';
+import { AboutTaskComponent } from './components/management/task/about-task/about-task.component';
+import { ProjectTaskComponent } from './components/management/project/project-task/project-task.component';
 
 export const environment = {
   apiKey: "AIzaSyADxuml0ThMfs5TrERGUcvyEypqSoXawwk",
@@ -85,18 +86,17 @@ export const environment = {
     AssignEmployeeComponent,
     AssignTaskComponent,
     NewTaskComponent,
-    TaskComponent,
-    TaskOverviewComponent,
     EmployeeOverviewComponent,
     EmployeeProfileComponent,
     UpdateEmployeeComponent,
     ViewProjectsComponent,
     ProjectDetailsComponent,
     MyTaskComponent,
-    PendingComponent,
     ProfileEditComponent,
     MemoComponent,
-    MemoDetailsComponent
+    MemoDetailsComponent,
+    AboutTaskComponent,
+    ProjectTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -115,6 +115,9 @@ export const environment = {
     TagInputModule,
     BrowserAnimationsModule,
     ModalModule.forRoot(),
+    PopoverModule.forRoot(),
+    ChartsModule,
+    NgxPrintModule,
   ],
   providers: [PushNotificationService],
   bootstrap: [AppComponent],

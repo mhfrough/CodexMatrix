@@ -6,6 +6,9 @@ import { TaskService } from 'src/app/services/task/task.service';
 import { EmpService } from 'src/app/services/emp/emp.service';
 import { AppComponent } from 'src/app/app.component';
 import { TaskStatus } from 'src/app/interfaces/task';
+import { NotificationMessage } from 'test/CodexMatrix/src/app/interfaces/firebase';
+import { FirebaseService } from 'src/app/services/fbase/firebase.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-task',
@@ -34,9 +37,12 @@ export class MyTaskComponent implements OnInit {
   approveTotal: number = 0;
   totalTasks: number = 0;
 
+  fbase: NotificationMessage;
+
 
   constructor(public app: AppComponent, public dept: DeptService, public proj: ProjService,
-    public task: TaskService, public emp: EmpService) { }
+    public task: TaskService, public emp: EmpService, public firebase: FirebaseService,
+    public router: Router) { }
 
   ngOnInit() {
     this.assignedBy = localStorage.getItem('id');
@@ -48,19 +54,19 @@ export class MyTaskComponent implements OnInit {
 
     this.delay(3000).then(any => {
       for (let array of this.task.taskUser) {
-        if(array.status == 'pending'){
+        if (array.status == 'pending') {
           this.pendingTotal++;
         }
-        if(array.status == 'in-progress'){
+        if (array.status == 'in-progress') {
           this.inprogressTotal++;
         }
-        if(array.status == 'completed'){
+        if (array.status == 'completed') {
           this.completeTotal++;
         }
-        if(array.status == 'rejected'){
+        if (array.status == 'rejected') {
           this.rejectTotal++;
         }
-        if(array.status == 'approved'){
+        if (array.status == 'approved') {
           this.approveTotal++;
         }
       }
@@ -68,7 +74,7 @@ export class MyTaskComponent implements OnInit {
     });
   }
 
-  allTasks(){
+  allTasks() {
     this.task.taskUser = [];
     this.task.getUserTask(localStorage.getItem('id'), "d442599c-c4e7-11e8-941d-d0bf9ce16c80");
     this.task.getUserTask(localStorage.getItem('id'), "fd1783d9-c4e7-11e8-941d-d0bf9ce16c80");
@@ -77,32 +83,37 @@ export class MyTaskComponent implements OnInit {
     this.task.getUserTask(localStorage.getItem('id'), "f1bc2bcc-c4e7-11e8-941d-d0bf9ce16c80");
   }
 
-  pendingTasks(){
+  taskDetails(id, data) { 
+    this.router.navigate(['task/' + id]) 
+  this.task.taskData = data;
+  }
+
+  pendingTasks() {
     this.task.taskUser = [];
     this.task.getUserTask(localStorage.getItem('id'), "d442599c-c4e7-11e8-941d-d0bf9ce16c80");
   }
 
-  inprogressTasks(){
+  inprogressTasks() {
     this.task.taskUser = [];
     this.task.getUserTask(localStorage.getItem('id'), "d442919d-c4e7-11e8-941d-d0bf9ce16c80");
   }
 
-  completeTasks(){
+  completeTasks() {
     this.task.taskUser = [];
     this.task.getUserTask(localStorage.getItem('id'), "f1bc127a-c4e7-11e8-941d-d0bf9ce16c80");
   }
 
-  rejectTasks(){
+  rejectTasks() {
     this.task.taskUser = [];
     this.task.getUserTask(localStorage.getItem('id'), "f1bc2bcc-c4e7-11e8-941d-d0bf9ce16c80");
   }
 
-  approveTasks(){
+  approveTasks() {
     this.task.taskUser = [];
     this.task.getUserTask(localStorage.getItem('id'), "fd1783d9-c4e7-11e8-941d-d0bf9ce16c80");
   }
 
-  acceptTask(data) {
+  acceptTask(data, givenBy, taskName) {
     this.isLoading = true;
     console.log(data);
     this.taskStatus = {
@@ -112,12 +123,26 @@ export class MyTaskComponent implements OnInit {
     }
     this.task.taskStatus(this.taskStatus).subscribe(res => {
       console.log(res);
+
+      this.fbase = {
+        id: data,
+        title: "Task Accepted",
+        message: "Task: " + taskName + " accepted by " + localStorage.getItem('name'),
+        from: localStorage.getItem('id'),
+        status: "un-read",
+        icon: "list_alt"
+      }
+
+      this.firebase.notification(givenBy, this.fbase).then(() => this.app.pushNotification("Task Assignment", "You have been assigned to " + this.taskName + " by " + localStorage.getItem('name')));
+
       this.allTasks();
       this.isLoading = false;
     });
   }
 
-  rejectTask(data){
+  rejectedTask(data, givenBy, taskName) {
+
+    console.log(12)
     this.isLoading = true;
     console.log(data);
     this.taskStatus = {
@@ -127,12 +152,24 @@ export class MyTaskComponent implements OnInit {
     }
     this.task.taskStatus(this.taskStatus).subscribe(res => {
       console.log(res);
+
+      this.fbase = {
+        id: data,
+        title: "Task Rejected",
+        message: "Task: " + taskName + " rejected by " + localStorage.getItem('name'),
+        from: localStorage.getItem('id'),
+        status: "un-read",
+        icon: "list_alt"
+      }
+
+      this.firebase.notification(givenBy, this.fbase).then(() => this.app.pushNotification("Task Assignment", "You have been assigned to " + this.taskName + " by " + localStorage.getItem('name')));
+
       this.allTasks();
       this.isLoading = false;
     });
   }
 
-  submitTask(data){
+  submitTask(data, givenBy, taskName) {
     this.isLoading = true;
     console.log(data);
     this.taskStatus = {
@@ -142,12 +179,24 @@ export class MyTaskComponent implements OnInit {
     }
     this.task.taskStatus(this.taskStatus).subscribe(res => {
       console.log(res);
+
+      this.fbase = {
+        id: data,
+        title: "Task Submited",
+        message: "Task: " + taskName + " submited by " + localStorage.getItem('name'),
+        from: localStorage.getItem('id'),
+        status: "un-read",
+        icon: "list_alt"
+      }
+
+      this.firebase.notification(givenBy, this.fbase).then(() => this.app.pushNotification("Task Assignment", "You have been assigned to " + this.taskName + " by " + localStorage.getItem('name')));
+
       this.allTasks();
       this.isLoading = false;
     });
   }
 
-  approveTask(data){
+  approveTask(data, givenBy, taskName) {
     this.isLoading = true;
     console.log(data);
     this.taskStatus = {
@@ -157,6 +206,18 @@ export class MyTaskComponent implements OnInit {
     }
     this.task.taskStatus(this.taskStatus).subscribe(res => {
       console.log(res);
+
+      this.fbase = {
+        id: data,
+        title: "Task Approved",
+        message: "Task: " + taskName + " approved by " + localStorage.getItem('name'),
+        from: localStorage.getItem('id'),
+        status: "un-read",
+        icon: "list_alt"
+      }
+
+      this.firebase.notification(givenBy, this.fbase).then(() => this.app.pushNotification("Task Assignment", "You have been assigned to " + this.taskName + " by " + localStorage.getItem('name')));
+
       this.allTasks();
       this.isLoading = false;
     });
@@ -164,6 +225,14 @@ export class MyTaskComponent implements OnInit {
 
   async delay(ms: number) {
     await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("fired"));
+  }
+
+  sortDesc() {
+    this.task.taskList = this.task.taskList.sort((a, b) => 0 - (a.name.rendered > b.name.rendered ? -1 : 1));
+  }
+
+  sortAsc() {
+    this.task.taskList = this.task.taskList.sort((a, b) => 0 - (a.name.rendered > b.name.rendered ? -1 : 1));
   }
 
 }

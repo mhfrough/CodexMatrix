@@ -86,7 +86,7 @@ export class CategoryComponent implements OnInit {
   }
 
   onSubmit(post) {
-    this.isLoading = true;
+    // this.isLoading = true;
 
     if (!this.isUpdate) {
       this.catReq = {
@@ -94,13 +94,13 @@ export class CategoryComponent implements OnInit {
         deptId: post.deptName,
       }
 
-      console.log(post.deptName);
+      // console.log(post.deptName);
 
       this.cat.createCat(this.catReq).subscribe(res => {
-        console.log(12);
-        console.log(res);
+        // console.log(12);
+        // console.log(res);
         if (res.status == 1) {
-          this.isLoading = false;
+          // this.isLoading = false;
           console.log(res);
           this.app.alerts.push({
             type: 'success',
@@ -108,7 +108,8 @@ export class CategoryComponent implements OnInit {
             msg: `${res.message}`,
             timeout: 5000
           });
-          this.oneForAll();
+          this.cat.catList.push(res.data)
+          // this.oneForAll();
         } else {
 
           this.app.alerts.push({
@@ -127,13 +128,15 @@ export class CategoryComponent implements OnInit {
 
       this.cat.updateCat(this.catPut).subscribe(res => {
         if (res.status == 1) {
-          this.isLoading = false;
+          // this.isLoading = false;
           this.app.alerts.push({
             type: 'info',
             icon: 'priority_high',
             msg: `${res.message}`,
             timeout: 5000
           });
+
+          this.oneForAll();
         } else {
           this.app.alerts.push({
             type: 'warning',
@@ -160,14 +163,17 @@ export class CategoryComponent implements OnInit {
   }
 
   onDelete(id: String) {
-    this.isLoading = true;
+    // this.isLoading = true;
     console.log(id);
     this.catDel = {
       categoryId: id
     }
     this.cat.deleteCat(this.catDel).subscribe(res => {
       // Department Deleted
-      this.isLoading = false;
+      // this.isLoading = false;
+
+      this.cat.catList = this.cat.catList.filter(cat => cat.id !== id);
+
       this.app.alerts.push({
         type: 'danger',
         icon: 'report',
@@ -175,8 +181,7 @@ export class CategoryComponent implements OnInit {
         timeout: 5000
       });
 
-      console.log(this.temp + "   1");
-      this.cat.getCat(this.temp);
+      // this.cat.getCat(this.temp);
     });
     this.rForm.reset();
     this.app.reset();

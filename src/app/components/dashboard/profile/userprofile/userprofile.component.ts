@@ -18,7 +18,7 @@ export class UserprofileComponent implements OnInit {
   email: string = '';
   manager: string = '';
   department: string = '';
-  designation: string = '';
+  designation:string = '';
   role: string = '';
   created_at: string = '';
   updated_at: string = '';
@@ -40,7 +40,7 @@ export class UserprofileComponent implements OnInit {
 
   empStatus:any = 'Loading'
 
-  constructor(private route: ActivatedRoute, private task: TaskService,
+  constructor(private route: ActivatedRoute, public task: TaskService,
     private dept: DeptService, private emp: EmpService, public router: Router,
     private db: AngularFireDatabase) {
   }
@@ -60,7 +60,7 @@ export class UserprofileComponent implements OnInit {
       this.skills = res.userSkills;
     });
 
-    this.db.object('users/' + this.user$ + '/status')
+    this.db.object(localStorage.getItem('companyID') + '/users/' + this.user$ + '/status')
       .valueChanges().subscribe(action => {
         this.empStatus = action
         console.log(action)
@@ -98,7 +98,7 @@ export class UserprofileComponent implements OnInit {
   }
 
   changeStatus(data) {
-    this.db.database.ref('users/' + this.user$).update({ status: data })
+    this.db.database.ref(localStorage.getItem('companyID') + '/users/' + this.user$).update({ status: data })
   }
 
   allTasks() {

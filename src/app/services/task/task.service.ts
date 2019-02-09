@@ -9,6 +9,8 @@ import { TaskReq, TaskPut, TaskAct, AssigTaskReq, TaskStatus } from 'src/app/int
 })
 export class TaskService {
 
+  taskData: any;
+
   taskList: any[] = [];
   taskUser: any[] = [];
   taskListUser: String[] = [];
@@ -18,7 +20,7 @@ export class TaskService {
   constructor(private http: HttpClient,
     private router: Router) { }
 
-  getTask(data: String) {
+  getTask(data) {
     this.taskList = [];
     return this.http.get<any>(g.apiURL + '/get-all-tasks-by-project?projId=' + data
     ).subscribe(res => {

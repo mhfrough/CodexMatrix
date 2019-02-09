@@ -78,7 +78,7 @@ export class SkillsComponent implements OnInit {
   }
 
   onSubmit(post) {
-    this.isLoading = true;
+    // this.isLoading = true;
 
     if (!this.isUpdate) {
       this.skilReq = {
@@ -87,18 +87,20 @@ export class SkillsComponent implements OnInit {
       }
 
       this.skil.createSkill(this.skilReq).subscribe(res => {
-        console.log(res);
+        // console.log(res);
         if (res.status == 1) {
-          this.isLoading = false;
-          console.log(res);
+          // this.isLoading = false;
+          // console.log(res);
           this.app.alerts.push({
             type: 'success',
             icon: 'done',
             msg: `${res.message}`,
             timeout: 5000
           });
+
+          this.skil.skilList.push(res.data)
         } else {
-          this.isLoading = false;
+          // this.isLoading = false;
           this.app.alerts.push({
             type: 'warning',
             icon: 'warning',
@@ -119,8 +121,8 @@ export class SkillsComponent implements OnInit {
   
 
   onDelete(id: String) {
-    console.log(id);
-    this.isLoading = true;
+    // console.log(id);
+    // this.isLoading = true;
     this.skilDel = {
       skillId: id
     }
@@ -128,8 +130,8 @@ export class SkillsComponent implements OnInit {
     console.log(this.skilDel);
     this.skil.deleteSkill(this.skilDel).subscribe(res => {
       // Sill Deleted
-      console.log(res);
-      this.isLoading = false;
+      // console.log(res);
+      // this.isLoading = false;
       this.app.alerts.push({
         type: 'danger',
         icon: 'report',
@@ -137,7 +139,8 @@ export class SkillsComponent implements OnInit {
         timeout: 5000
       });
 
-      this.skil.getSkill(this.temp);   
+      
+      this.skil.skilList = this.skil.skilList.filter(skil => skil.id !== id);
 
     });
 

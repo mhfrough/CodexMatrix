@@ -34,7 +34,7 @@ export class MemoComponent implements OnInit {
     public dept: DeptService, private db: AngularFireDatabase, public router: Router,
     public app: AppComponent) {
     // Manager ID
-    db.list('notes/9JU1uZdcU1yLpDEWdVKKdjlaJQCTEKaecl7m/').snapshotChanges().pipe(
+    db.list(localStorage.getItem('companyID') + '/notes/' +localStorage.getItem('mgr')).snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       )
@@ -56,7 +56,7 @@ export class MemoComponent implements OnInit {
   }
 
   read(data) {
-    this.db.list('notes/' + localStorage.getItem('id') + '/' + data.key + '/readers').snapshotChanges().pipe(
+    this.db.list(localStorage.getItem('companyID') + '/notes/' + localStorage.getItem('id') + '/' + data.key + '/readers').snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       )
@@ -85,7 +85,7 @@ export class MemoComponent implements OnInit {
 
       if (!this.isReader) {
         // Manager Id
-        this.db.database.ref('notes/' + localStorage.getItem('id') + '/' + data.key + '/readers').push({
+        this.db.database.ref(localStorage.getItem('companyID') + '/notes/' + localStorage.getItem('mgr') + '/' + data.key + '/readers').push({
           employeeID: localStorage.getItem('id'),
           employeeName: localStorage.getItem('name') + "abc"
         }).then(any => {
@@ -101,7 +101,7 @@ export class MemoComponent implements OnInit {
   }
 
   note(title, body) {
-    this.db.database.ref('notes/' + localStorage.getItem('id')).push({
+    this.db.database.ref(localStorage.getItem('companyID') + '/notes/' + localStorage.getItem('id')).push({
       title: title,
       body: body,
       time: formatDate(this.today, 'dd MMM, yyyy', 'en-US', '+0530'),

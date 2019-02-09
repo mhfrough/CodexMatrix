@@ -43,7 +43,7 @@ export class EmployeeProfileComponent implements OnInit {
 
   empStatus: any = 'Loading'
 
-  constructor(private route: ActivatedRoute, private task: TaskService,
+  constructor(private route: ActivatedRoute, public task: TaskService,
     private dept: DeptService, private emp: EmpService, private db: AngularFireDatabase) {
     this.route.params.subscribe(params => this.user$ = params.id);
   }
@@ -67,7 +67,7 @@ export class EmployeeProfileComponent implements OnInit {
       console.log(this.skills);
     });
 
-    this.db.object('users/' + this.user$ + '/status')
+    this.db.object(localStorage.getItem('companyID') + '/users/' + this.user$ + '/status')
       .valueChanges().subscribe(action => {
         this.empStatus = action
         console.log(action)

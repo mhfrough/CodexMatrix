@@ -4,3 +4,7 @@
 .ui:hover{
     text-decoration: underline !important;
 }
+
+.profile{
+    left: auto;
+}

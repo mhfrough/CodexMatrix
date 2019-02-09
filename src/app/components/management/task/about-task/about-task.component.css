@@ -1,0 +1,55 @@
+.badge-rejected{
+  color: #fff;
+  background-color: #c4183c;
+}
+
+.badge-completed{
+  color: #fff;
+  background-color: #17c671;
+}
+
+.badge-approved{
+  color: #fff;
+  background-color: #007bff;
+}
+
+.badge-pending{
+  color: #212529;
+  background-color: #ffb400;
+}
+
+.badge-in-progress{
+  color: #fff;
+  background-color: #674eec;   
+}
+
+.text-1{
+  color:#17c671;
+}
+.text-1::after{
+  content: 'Low';
+}
+.text-2{
+  color:#ffb400;
+}
+.text-2::after{
+  content: 'Medium';
+}
+.text-3{
+  color:#c4183c;
+}
+.text-3::after{
+  content: 'High';
+}
+
+.col-width {
+  width: 38%;
+}
+.col-width-1{
+  width: 12%;
+}
+
+small{
+  font-size: 60%;
+  font-style: italic;
+}

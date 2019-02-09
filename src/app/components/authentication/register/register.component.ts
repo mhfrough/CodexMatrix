@@ -120,8 +120,8 @@ export class RegisterComponent implements OnInit {
         localStorage.setItem('loginStatus', "true");
         localStorage.setItem('id', res.data.id);
         localStorage.setItem('email', res.data.email);
-        localStorage.setItem('email', res.data.email);
-        localStorage.setItem('domain', res.data.domainId);
+        localStorage.setItem('name', res.data.username);
+        localStorage.setItem('mgr', '0');
         localStorage.setItem('role', res.data.role);
         localStorage.setItem('companyID', res.data.companyId);
         localStorage.setItem('companyName', res.data.name);
@@ -161,7 +161,7 @@ export class RegisterComponent implements OnInit {
           id: res.data.id
         }
         console.log(r);
-        this.db.database.ref('users/' + res.data.id).set({
+        this.db.database.ref(res.data.companyId+'/users/' + res.data.id).set({
           name: res.data.name,
           email: res.data.email,
           status: 'Available'

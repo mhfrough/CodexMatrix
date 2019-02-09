@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import * as g from 'src/app/app.globals';
 import { ProjReq, ProjPut, ProjDel, EmpProjReq, EmpProjDel } from 'src/app/interfaces/proj';
@@ -30,6 +30,14 @@ export class ProjService {
     return this.http.get<any>(g.apiURL + '/get-project-details?projectId=' + data);
   }
 
+  assignTaskAutomatically(data: any) {
+    console.log(data)
+    const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+
+    
+    return this.http.post<any>(g.apiURL + '/automatic-task-assign', data, {headers: headers});
+  }
+
   getProjMembers(data: String) {
     console.log(13);
     this.projMembersList = [];
@@ -44,16 +52,16 @@ export class ProjService {
     })
   }
 
-  createDept(data: ProjReq) {
+  createProject(data: ProjReq) {
     console.log(data);
     return this.http.post<any>(g.apiURL + '/create-project', data);
   }
 
-  updateDept(data: ProjPut) {
+  updateProject(data: ProjPut) {
     return this.http.post<any>(g.apiURL + '/update-project', data);
   }
 
-  deleteDept(data: ProjDel) {
+  deleteProject(data: ProjDel) {
     return this.http.post<any>(g.apiURL + '/delete-project', data);
   }
 

@@ -69,13 +69,19 @@ export class LoginComponent implements OnInit {
         console.log(res);
         localStorage.setItem('loginStatus', "true");
         localStorage.setItem('id', res.data.id);
+        localStorage.setItem('name', res.data.username);
+        localStorage.setItem('mgr', res.data.mgrId);
         localStorage.setItem('email', res.data.email);
         localStorage.setItem('role', res.data.role);
         localStorage.setItem('companyID', res.data.companyId);
         localStorage.setItem('companyName', res.data.companyName);
+        if (res.data.domain == "IT")
+          localStorage.setItem('domain', "sof");
+        else
+          localStorage.setItem('domain', "uni");
         this.delay(1000).then(any => {
           this.app.company = res.data.companyName;
-          this.router.navigate(['']);
+          window.location.reload();
         });
       } else {
         this.isLoading = false;

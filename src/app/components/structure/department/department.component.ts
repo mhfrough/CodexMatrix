@@ -78,7 +78,7 @@ export class DepartmentComponent implements OnInit {
 
           this.dept.deptList.push(res.data)
 
-          console.log(res);
+          // console.log(res);
           // Department Creation Successful
           this.app.alerts.push({
             type: 'success',
@@ -88,8 +88,8 @@ export class DepartmentComponent implements OnInit {
           });
           // this.getAllDept();
         } else {
-          this.isLoading = false;
-          console.log(res);
+          // this.isLoading = false;
+          // console.log(res);
           this.app.alerts.push({
             type: 'warning',
             icon: 'warning',
@@ -108,7 +108,7 @@ export class DepartmentComponent implements OnInit {
 
       this.dept.updateDept(this.deptPut).subscribe(res => {
         if (res.status == 1) {
-          this.isLoading = false;
+          // this.isLoading = false;
           console.log(res);
           // Department Update Successful
           this.app.alerts.push({
@@ -119,7 +119,7 @@ export class DepartmentComponent implements OnInit {
           });
           this.getAllDept();
         } else {
-          this.isLoading = false;
+          // this.isLoading = false;
           console.log(res);
           this.app.alerts.push({
             type: 'warning',
@@ -153,16 +153,9 @@ export class DepartmentComponent implements OnInit {
     this.dept.deleteDept(this.deptDel).subscribe(res => {
 
 
-      if (res.status == 1) {
-        const index: number = this.dept.deptList.indexOf(id);
-        if (index !== -1) {
-          this.dept.deptList = this.dept.deptList.splice(index, 1);
-        }
-      }
-
-
+      this.dept.deptList = this.dept.deptList.filter(dept => dept.id !== id);
       // Department Deleted
-      this.isLoading = false;
+      // this.isLoading = false;
       this.app.alerts.push({
         type: 'danger',
         icon: 'report',
